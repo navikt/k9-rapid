@@ -9,7 +9,7 @@ import no.nav.k9.rapid.behov.Behovsformat
 
 fun JsonMessage.leggTilBehov(
         aktueltBehov: String,
-        vararg behov: Behov) {
+        vararg behov: Behov) : JsonMessage {
     require(behov.isNotEmpty()) {
         "Må legges til minst et nytt behov."
     }
@@ -49,4 +49,5 @@ fun JsonMessage.leggTilBehov(
     }
 
     set(Behovsformat.Behov, nåværendeBehov)
+    return this
 }

@@ -9,7 +9,7 @@ import no.nav.k9.rapid.behov.Behovssekvens
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import java.util.*
+import java.util.UUID
 
 internal class LeggTilLøsningTest {
 
@@ -32,7 +32,6 @@ internal class LeggTilLøsningTest {
         jsonMessage.leggTilLøsning("Foo", mapOf("løsning" to true))
         jsonMessage.assertInneholderLøsninger("Foo")
 
-        val løsningBar = Pair("Bar", mapOf("løsning" to true))
         jsonMessage.leggTilLøsning("Bar", mapOf("løsning" to true))
         jsonMessage.assertInneholderLøsninger("Foo", "Bar")
     }

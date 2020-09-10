@@ -17,7 +17,7 @@ internal val jacksonObjectMapper = jacksonObjectMapper()
 
 fun JsonMessage.leggTilLøsning(
         behov: String,
-        løsning: Map<String, *> = emptyMap<String, Any>()) {
+        løsning: Map<String, *> = emptyMap<String, Any>()) : JsonMessage {
     val nåværendeLøsninger = get(Løsninger)
 
     val løsningMedTimestamp = løsning.plus(Løst to nå().iso8601())
@@ -28,4 +28,5 @@ fun JsonMessage.leggTilLøsning(
         løsninger.replace(behov, jacksonObjectMapper.valueToTree(løsningMedTimestamp))
         set(Løsninger, løsninger)
     }
+    return this
 }
