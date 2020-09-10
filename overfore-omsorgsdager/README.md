@@ -44,13 +44,21 @@ producer.send(ProducerRecord(rapidTopic, id, overføring))
 
 ## Hente løsninger på overføring av dager
 
-- Om løsningen `erGjennomført()` kan det ha konsekvenser for X antall personer.
-Derfor inneholder løsningen et Map hvor nøkkelen er personens identitetsnummer, og inneholder hvilke overføringer den nå har `fått` og `gitt` (To separate lister)
-Eventuelle tidligere overføringer man har lagret på de samme personene kan nå slettes. Er kun de i den siste løsningen som gjelder.
+- Om løsningen `erGjennomført()` kan det ha konsekvenser for `X` antall personer.
+Derfor inneholder løsningen et map hvor nøkkelen er personens identitetsnummer, og inneholder hvilke overføringer den nå har `fått` og `gitt` (to separate lister).
+Eventuelle tidligere overføringer man har lagret på de samme personene kan nå slettes/markeres som ikke lenger aktive. 
+Det er kun de i den siste løsningen som gjelder.
 
+- For å være sikker på at det er den siste løsningen kan man sjekke mot referansen på ev. nåværende lagrede overføringer. Bl.a. for å kunne håndetre uventet Kafka-oppførsel.
+```kotlin
+val gammelId = hentFraDb(identitetsnummer)
+if (id.erNyereEnn(gammelId)) {
+    lagreNyeOverføringerIDb(identitetsnummer, id, overføringer)
+}
+```
 - Om løsningen `erAvslått()` har ingen overføringer blitt gjort, men inneholder overføringen(e) som ble forsøkt gjort. Disse kan ev. lagres om man ønsker å vise frem feilede overføringer også.
 
-- Om løsningen `behandlesIkkeINyLøsning()` har ingen overføringer blitt gjort, og inneholder heller ingen overføringer som ble forsøkt gjort da dette er sendt til behandling utenom ny løsning.
+- Om løsningen `ikkeBehandlesAvNyttSystem()` har ingen overføringer blitt gjort, og inneholder heller ingen overføringer som ble forsøkt gjort da dette er sendt til behandling utenom nytt system.
 
 ```kotlin
 val rapidTopic = "k9-rapid-v1"
@@ -62,8 +70,6 @@ consumer.poll(Duration.ofSeconds(1)).records(rapidTopic)
     .filter { it.value().somMelding().harLøsningPå(OverføreOmsorgsdagerLøsningResolver.Instance) }
     .forEach {
         val (id, løsning) = it.value().somMelding().løsningPå(OverføreOmsorgsdagerLøsningResolver.Instance)
-        // id er den samme som fra behovet. Kan være lur å lagre unna sammen med overføringen for å ha en referanse på hvor de kommer fra.
-        // Lagre unna overføringene som nå gjelder for personene i løsningen
-        // Slette eller deaktivere ev. tidligere overføringer på samme personene.
+        // id er den samme som fra behovet. Må lagres sammen med overføringene som en referanse.
     }
 ```
