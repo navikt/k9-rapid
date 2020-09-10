@@ -10,7 +10,7 @@ import no.nav.helse.rapids_rivers.isMissingOrNull
 import no.nav.k9.rapid.behov.Behovsformat.iso8601
 import no.nav.k9.rapid.behov.Behovsformat.nå
 
-private val jacksonObjectMapper = jacksonObjectMapper()
+internal val jacksonObjectMapper = jacksonObjectMapper()
         .registerModule(JavaTimeModule())
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
