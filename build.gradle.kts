@@ -12,6 +12,11 @@ repositories {
     mavenCentral()
 }
 
+allprojects {
+    group = "no.nav.k9.rapid"
+    version = properties["version"] ?: "local-build"
+}
+
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
