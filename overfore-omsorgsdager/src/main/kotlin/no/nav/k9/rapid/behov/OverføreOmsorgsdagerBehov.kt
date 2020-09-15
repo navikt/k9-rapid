@@ -3,13 +3,13 @@ package no.nav.k9.rapid.behov
 import java.time.LocalDate
 
 class OverføreOmsorgsdagerBehov(
-        private val fra: OverførerFra,
-        private val til: OverførerTil,
-        private val omsorgsdagerTattUtIÅr: Int,
-        private val omsorgsdagerÅOverføre: Int,
-        private val barn: List<Barn> = listOf(),
-        kilde: Kilde,
-        private val journalpostIder: List<String>
+        val fra: OverførerFra,
+        val til: OverførerTil,
+        val omsorgsdagerTattUtIÅr: Int,
+        val omsorgsdagerÅOverføre: Int,
+        val barn: List<Barn> = listOf(),
+        val kilde: Kilde,
+        val journalpostIder: List<String>
 ) : Behov(
         navn = Navn,
         input = mapOf(
@@ -29,7 +29,7 @@ class OverføreOmsorgsdagerBehov(
         if (!fra.borINorge || !fra.jobberINorge) mangler.add("For å overføre dager må man bo og jobbe  i Norge.")
 
         if (!til.identitetsnummer.erGyldigIdentitetsnummer()) mangler.add("'til.identitetsnummer' er ugyldig (var ${til.identitetsnummer})")
-        if (til.relasjon == Relasjon.NåværendeSamboer && til.harBoddSammenMinstEttÅr == null) mangler.add("For oveføring til nåværende samboer må man opplyse om man har bodd sammen minst ett år.")
+        if (til.relasjon == Relasjon.NåværendeSamboer && til.harBoddSammenMinstEttÅr == null) mangler.add("For overføring til nåværende samboer må man opplyse om man har bodd sammen minst ett år.")
 
         if (fra.identitetsnummer == til.identitetsnummer) mangler.add("'fra.identitetsnummer' kan ikke være lik 'til.identitetsnummer'")
 
