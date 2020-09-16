@@ -55,7 +55,7 @@ internal class LøsningPåTest {
 
         utenLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance)
         utfall = sisteUtfallPacketListener.sistUtfall().first
-        assertEquals(SisteUtfallPacketListener.Utfall.Packet, utfall)
+        assertEquals(SisteUtfallPacketListener.Utfall.Error, utfall)
     }
 
     @Test

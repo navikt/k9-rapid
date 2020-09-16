@@ -24,15 +24,15 @@ fun JsonMessage.utenLøsningPåBehov(vararg behov: String) {
     if (!erBehovssekvens(this)) return
     require(behov.isNotEmpty()) { "Må sendes med minst et behov." }
 
-    val behovList = behov.toList()
     val løsninger = get(Løsninger).fieldNames().asSequence().toList()
+    val finnesLøsningPå = behov.toList().intersect(løsninger)
 
-    when (løsninger.containsAll(behovList)) {
-        true -> {
-            behovList.forEach { behov ->
-                require("$Løsninger.$behov") { throw IllegalStateException("Behov har en løsning.") }
+    when (finnesLøsningPå.isEmpty()) {
+        true -> return
+        false -> {
+            finnesLøsningPå.forEach {
+                require("$Løsninger.$it") { throw IllegalStateException("Behov har en løsning.") }
             }
         }
-        false -> return
     }
 }
