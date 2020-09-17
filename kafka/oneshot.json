@@ -3,13 +3,19 @@
    {
       "topicName": "k9-rapid-v1",
       "configEntries": {
-        "retention.ms": "1209600000"
+        "retention.ms": "1209600000",
+        "cleanup.policy": "compact"
       },
       "members": [
         {"member": "A158227", "role": "MANAGER"},
         {"member": "F154868", "role": "MANAGER"}, 
         {"member": "srvomsrammemelding", "role": "PRODUCER"},
-        {"member": "srvomsrammemelding", "role": "CONSUMER"} ],
+        {"member": "srvomsrammemelding", "role": "CONSUMER"}, 
+        {"member": "srvomssak", "role": "PRODUCER"},
+        {"member": "srvomssak", "role": "CONSUMER"}, 
+        {"member": "srvk9punsj", "role": "PRODUCER"}, 
+        {"member": "srvomsover-prs", "role": "PRODUCER"},
+        {"member": "srv-sif-innsyn-mtk", "role": "CONSUMER"} ],
       "numPartitions": 6
    }
  ] 
