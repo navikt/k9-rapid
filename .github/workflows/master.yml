@@ -2,6 +2,12 @@ name: build and publish
 
 on:
   push:
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - 'LICENCE'
+      - 'CODEOWNERS'
+      - 'kafka/oneshot.json'
     branches:
       - master
 
