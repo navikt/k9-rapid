@@ -19,7 +19,6 @@ object Behovsformat {
     const val Behovsrekkefølge = "@behovsrekkefølge"
     const val Behov = "@behov"
     internal const val Opprettet = "@opprettet"
-    const val ForventetLøst = "@forventetLøst"
 
     const val Type = "@type"
     const val Versjon = "@versjon"

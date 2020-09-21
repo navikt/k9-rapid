@@ -11,7 +11,6 @@ class Behovssekvens(
         correlationId: String,
         vararg behov: Behov) {
     private val opprettet = Behovsformat.nå()
-    private val forventetLøst = behov.forventerLøsningInnen().let { opprettet.plus(it) }
 
     @Language("json")
     private val rawJson = """
@@ -20,7 +19,6 @@ class Behovssekvens(
       "${Behovsformat.Type}": "${Behovsformat.BehovssekvensType}",
       "${Behovsformat.Versjon}": "${Behovsformat.BehovssekvensVersjon}",
       "${Behovsformat.Opprettet}" : "${opprettet.iso8601()}",
-      "${Behovsformat.ForventetLøst}" : "${forventetLøst.iso8601()}",
       "${Behovsformat.CorrelationId}": "$correlationId",
       "${Behovsformat.Behovsrekkefølge}": [],
       "${Behovsformat.Behov}": {}
@@ -61,8 +59,7 @@ class Behovssekvens(
                 Behovsformat.CorrelationId,
                 Behovsformat.Behovsrekkefølge,
                 Behovsformat.Behov,
-                Behovsformat.Opprettet,
-                Behovsformat.ForventetLøst
+                Behovsformat.Opprettet
         )
         val demandedValues = mapOf(
                 Behovsformat.Type to Behovsformat.BehovssekvensType,

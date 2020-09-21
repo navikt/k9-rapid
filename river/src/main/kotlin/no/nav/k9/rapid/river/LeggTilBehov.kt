@@ -1,16 +1,11 @@
 package no.nav.k9.rapid.river
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.isMissingOrNull
 import no.nav.k9.rapid.behov.Behov
 import no.nav.k9.rapid.behov.Behovsformat
-import no.nav.k9.rapid.behov.Behovsformat.iso8601
-import no.nav.k9.rapid.behov.Behovsformat.nå
-import no.nav.k9.rapid.behov.forventerLøsningInnen
-import java.time.ZonedDateTime
 
 fun JsonMessage.leggTilBehov(
         aktueltBehov: String,
@@ -55,14 +50,5 @@ fun JsonMessage.leggTilBehov(
 
     set(Behovsformat.Behov, nåværendeBehov)
 
-    val nåværendeForventetLøst = get(Behovsformat.ForventetLøst).asZonedDateTime()
-    val forventetLøstFraNyeBehov = behov.forventerLøsningInnen().let { nå().plus(it) }
-    if (forventetLøstFraNyeBehov.isAfter(nåværendeForventetLøst)) {
-        set(Behovsformat.ForventetLøst, forventetLøstFraNyeBehov.iso8601())
-    }
-
     return this
 }
-
-private fun JsonNode.asZonedDateTime(): ZonedDateTime =
-    asText().let { ZonedDateTime.parse(it) }
