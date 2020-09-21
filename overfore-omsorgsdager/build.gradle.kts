@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":behov"))
-    implementation(project(":losning"))
+    api(project(":behov"))
+    api(project(":losning"))
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
