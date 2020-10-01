@@ -21,7 +21,7 @@ internal fun erBehovssekvens(jsonMessage: JsonMessage) : Boolean {
     return if (typeOgVersjon == StøttetTypeOgVersjon) {
         Behovssekvens.demandedKeys.forEach { jsonMessage.demandKey(it) }
         Behovssekvens.demandedValues.forEach { (key, value) -> jsonMessage.demandValue(key, value)}
-        jsonMessage.interestedIn(Løsninger)
+        jsonMessage.interestedIn(Løsninger, Behovsformat.SistEndret)
         true
     } else {
         jsonMessage.requireValue(Behovsformat.Type, StøttetTypeOgVersjon.first.asText())

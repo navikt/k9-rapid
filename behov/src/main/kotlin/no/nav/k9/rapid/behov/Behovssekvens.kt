@@ -4,13 +4,14 @@ import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import de.huxhorn.sulky.ulid.ULID
 import no.nav.k9.rapid.behov.Behovsformat.iso8601
+import no.nav.k9.rapid.behov.Behovsformat.nå
 import org.intellij.lang.annotations.Language
 
 class Behovssekvens(
         id: String,
         correlationId: String,
         vararg behov: Behov) {
-    private val opprettet = Behovsformat.nå()
+    private val opprettet = nå()
 
     @Language("json")
     private val rawJson = """
@@ -19,6 +20,7 @@ class Behovssekvens(
       "${Behovsformat.Type}": "${Behovsformat.BehovssekvensType}",
       "${Behovsformat.Versjon}": "${Behovsformat.BehovssekvensVersjon}",
       "${Behovsformat.Opprettet}" : "${opprettet.iso8601()}",
+      "${Behovsformat.SistEndret}" : "${opprettet.iso8601()}",
       "${Behovsformat.CorrelationId}": "$correlationId",
       "${Behovsformat.Behovsrekkefølge}": [],
       "${Behovsformat.Behov}": {}

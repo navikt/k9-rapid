@@ -23,6 +23,8 @@ object Behovsformat {
     const val Type = "@type"
     const val Versjon = "@versjon"
 
+    const val SistEndret = "@sistEndret"
+
     val BehovssekvensType = "Behovssekvens"
     val BehovssekvensVersjon = "1"
 
