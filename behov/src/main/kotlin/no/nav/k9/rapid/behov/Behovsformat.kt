@@ -15,7 +15,7 @@ object Behovsformat {
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
     const val Id = "@id"
-    internal const val CorrelationId = "@correlationId"
+    const val CorrelationId = "@correlationId"
     const val Behovsrekkefølge = "@behovsrekkefølge"
     const val Behov = "@behov"
     internal const val Opprettet = "@opprettet"

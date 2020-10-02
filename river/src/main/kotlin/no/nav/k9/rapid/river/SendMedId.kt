@@ -12,5 +12,5 @@ fun JsonMessage.oppdaterSistEndret() {
 
 fun RapidsConnection.MessageContext.sendMedId(jsonMessage: JsonMessage) {
     jsonMessage.oppdaterSistEndret()
-    send(jsonMessage[Behovsformat.Id].asText(), jsonMessage.toJson())
+    send(jsonMessage.behovssekvensId(), jsonMessage.toJson())
 }
