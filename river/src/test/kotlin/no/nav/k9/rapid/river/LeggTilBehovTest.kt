@@ -15,26 +15,15 @@ import java.util.UUID
 
 internal class LeggTilBehovTest {
 
-    private companion object {
-        val behovssekvens = Behovssekvens(
-                id = ULID().nextULID(),
-                correlationId = UUID.randomUUID().toString(),
-                behov = arrayOf(
-                        Behov(navn = "Foo"),
-                        Behov(navn = "Bar"),
-                        Behov(navn = "Car")
-                )
-        )
-    }
     @Test
-    fun `Legge til behov  før første  behov`() {
+    fun `Legge til behov før første  behov`() {
         val jsonMessage = behovssekvens.somJsonMessage()
         jsonMessage.leggTilBehov("Foo", Behov(navn = "1"), Behov(navn = "2"))
         jsonMessage.assert(listOf("1","2","Foo", "Bar", "Car"))
     }
 
     @Test
-    fun `Legge til  behov før siste behov`() {
+    fun `Legge til behov før siste behov`() {
         val jsonMessage = behovssekvens.somJsonMessage()
         jsonMessage.leggTilBehov("Car", Behov(navn = "3"), Behov(navn = "4"))
         jsonMessage.assert(listOf("Foo", "Bar", "3", "4", "Car"))
@@ -45,11 +34,10 @@ internal class LeggTilBehovTest {
         val jsonMessage= behovssekvens.somJsonMessage()
         jsonMessage.leggTilBehov("Bar", Behov(navn = "2"))
         jsonMessage.assert(listOf("Foo", "2", "Bar", "Car"))
-
     }
 
     @Test
-    fun `Legge til nye behov`() {
+    fun `Legge til nye behov når aktuelt behov er løst`() {
         val jsonMessage = behovssekvens.somJsonMessage()
         jsonMessage.leggTilLøsning("Foo", mapOf("Løsning" to true))
         assertThrows<IllegalArgumentException> {
@@ -72,6 +60,31 @@ internal class LeggTilBehovTest {
             jsonMessage.leggTilBehov("Foo", Behov(navn = "Bar"))
         }
     }
+
+    @Test
+    fun `Aktuelle behovet er det eneste`() {
+        val jsonMessage = Behovssekvens(
+            id = ULID().nextULID(),
+            correlationId = UUID.randomUUID().toString(),
+            behov = arrayOf(
+                Behov(navn = "Foo")
+            )
+        ).somJsonMessage()
+        jsonMessage.leggTilBehov("Foo", Behov(navn = "Bar"), Behov(navn = "Car"))
+        jsonMessage.assert(listOf("Bar", "Car", "Foo"))
+    }
+
+    private companion object {
+        val behovssekvens = Behovssekvens(
+            id = ULID().nextULID(),
+            correlationId = UUID.randomUUID().toString(),
+            behov = arrayOf(
+                Behov(navn = "Foo"),
+                Behov(navn = "Bar"),
+                Behov(navn = "Car")
+            )
+        )
+    }
 }
 
 internal fun Behovssekvens.somJsonMessage() = JsonMessage(
@@ -79,7 +92,7 @@ internal fun Behovssekvens.somJsonMessage() = JsonMessage(
         problems = MessageProblems(originalMessage = keyValue.second)
 ).also { require(erBehovssekvens(it)) }
 
-private fun JsonMessage.assert(forventetBehovsrekkefølge: List<String>) {
+internal fun JsonMessage.assert(forventetBehovsrekkefølge: List<String>) {
     assertEquals(forventetBehovsrekkefølge, get(Behovsformat.Behovsrekkefølge).map { it.asText() })
     val behov = get(Behovsformat.Behov) as ObjectNode
     forventetBehovsrekkefølge.forEach { assertEquals(JsonNodeType.OBJECT, behov[it].nodeType) }
