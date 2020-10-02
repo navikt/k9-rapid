@@ -10,7 +10,7 @@ fun JsonMessage.oppdaterSistEndret() {
     set(Behovsformat.SistEndret, nå().iso8601())
 }
 
-fun RapidsConnection.MessageContext.sendMedId(jsonMessage: JsonMessage) {
-    jsonMessage.oppdaterSistEndret()
-    send(jsonMessage.behovssekvensId(), jsonMessage.toJson())
+fun RapidsConnection.MessageContext.sendMedId(packet: JsonMessage) {
+    packet.oppdaterSistEndret()
+    send(packet.behovssekvensId(), packet.toJson())
 }

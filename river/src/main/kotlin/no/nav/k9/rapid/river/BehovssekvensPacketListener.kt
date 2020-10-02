@@ -11,7 +11,17 @@ abstract class BehovssekvensPacketListener(
     protected val logger: Logger) : River.PacketListener {
     protected val secureLogger = LoggerFactory.getLogger("tjenestekall")
 
-    abstract fun handlePacket(packet: JsonMessage) : Boolean
+    /**
+     * returns true: packet sendes
+     * returns false/ kaster exception: packet sendes ikke
+     */
+    abstract fun handlePacket(id: String, packet: JsonMessage) : Boolean
+
+    /**
+     * kjøres etter at packet er sendt.
+     * Lagre at packet er blitt håndtert
+     */
+    open fun onSent(id: String, packet: JsonMessage) {}
 
     override fun onPacket(packet: JsonMessage, context: RapidsConnection.MessageContext) {
         val behovssekvensId = packet.behovssekvensId()
@@ -20,25 +30,48 @@ abstract class BehovssekvensPacketListener(
         withMDC(mapOf(
             BehovssekvensIdKey to behovssekvensId,
             CorrelationIdKey to correlationId)) {
+
             val handlePacketOk = try {
-                handlePacket(packet).also { if (!it) {
-                    logger.error("handlePacket returnerte false. Se sikker logg for mer detaljer.")
-                    secureLogger.info("ErrorPacket: ${packet.toJson()}")
+                handlePacket(id = behovssekvensId, packet = packet).also { if (!it) {
+                    "handlePacket returnerte false".also { error ->
+                        error.errorApplicationLog()
+                        error.errorSecureLog(packet)
+                    }
                 }}
             } catch (cause: Throwable) {
-                logger.error("handlePacket kastet exception ${cause::class.simpleName?:"n/a"}. Se sikker logg for mer detaljer.")
-                secureLogger.info("ErrorPacket: ${packet.toJson()}", cause)
-                false
+                "handlePacket kastet exception ${cause::class.simpleName}".also { error ->
+                    error.errorApplicationLog()
+                    error.errorSecureLog(packet, cause)
+                }.let { false }
             }
+
             if (handlePacketOk) {
                 try {
-                    context.sendMedId(packet)
+                    context.sendMedId(packet = packet)
                 } catch (cause: Throwable) {
-                    secureLogger.info("ErrorPacket: ${packet.toJson()}", cause)
-                    throw IllegalStateException("sendMedId kastet exception ${cause::class.simpleName?:"n/a"}. Se sikker logg for mer detaljer.")
+                    "sendMedId kastet exception ${cause::class.simpleName}".also { error ->
+                        error.errorSecureLog(packet, cause)
+                        throw IllegalStateException(error.seSikkerLogg())
+                    }
+                }
+
+                try {
+                    onSent(id = behovssekvensId, packet = packet)
+                } catch (cause: Throwable) {
+                    "onSent kastet exception ${cause::class.simpleName}".also { error ->
+                        error.errorSecureLog(packet, cause)
+                        throw IllegalStateException(error.seSikkerLogg())
+                    }
                 }
             }
         }
+    }
+
+    private fun String.seSikkerLogg() = "$this. Se sikker log for mer detaljer."
+    private fun String.errorApplicationLog() = logger.error(this.seSikkerLogg())
+    private fun String.errorSecureLog(packet: JsonMessage, cause: Throwable? = null) = when (cause) {
+        null -> secureLogger.error("$this. ErrorPacket=${packet.toJson()}")
+        else -> secureLogger.error("$this. ErrorPacket=${packet.toJson()}", cause)
     }
 
     private fun withMDC(context: Map<String, String>, block: () -> Unit) {
