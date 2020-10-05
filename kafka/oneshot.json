@@ -1,10 +1,10 @@
 {
  "topics": [
    {
-      "topicName": "k9-rapid-v1",
+      "topicName": "k9-rapid-v2",
       "configEntries": {
-        "retention.ms": "1209600000",
-        "cleanup.policy": "compact"
+        "retention.ms": "2419199997",
+        "cleanup.policy": "delete"
       },
       "members": [
         {"member": "A158227", "role": "MANAGER"},
