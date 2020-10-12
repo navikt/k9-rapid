@@ -13,6 +13,8 @@
         {"member": "srvomsrammemelding", "role": "CONSUMER"}, 
         {"member": "srvomssak", "role": "PRODUCER"},
         {"member": "srvomssak", "role": "CONSUMER"}, 
+        {"member": "srvomsjournalforing", "role": "PRODUCER"},
+        {"member": "srvomsjournalforing", "role": "CONSUMER"}, 
         {"member": "srvk9punsj", "role": "PRODUCER"}, 
         {"member": "srvomsover-prs", "role": "PRODUCER"},
         {"member": "srv-sif-innsyn-mtk", "role": "CONSUMER"} ],
