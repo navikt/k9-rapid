@@ -60,8 +60,7 @@ class OverføreOmsorgsdagerBehov(
 
     data class OverførerFra(
             val identitetsnummer: String,
-            val jobberINorge: Boolean,
-            val borINorge: Boolean
+            val jobberINorge: Boolean
     )
 
     data class OverførerTil(

@@ -24,7 +24,11 @@ internal class OverføreOmsorgsdagerLøsningResolverTest {
                     gitt = listOf(
                         OverføreOmsorgsdagerLøsning.OverføringGitt(
                             til = OverføreOmsorgsdagerLøsning.Person(
-                                navn =  "Ola Nordmann",
+                                navn = OverføreOmsorgsdagerLøsning.Navn(
+                                    fornavn = "Ola",
+                                    mellomnavn = null,
+                                    etternavn = "Nordmann"
+                                ),
                                 fødselsdato = LocalDate.now()
                             ),
                             antallDager = 5,

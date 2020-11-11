@@ -20,7 +20,6 @@ internal fun gyldigBehovssekvens() = Behovssekvens(
         behov = arrayOf(OverføreOmsorgsdagerBehov(
                 fra = OverføreOmsorgsdagerBehov.OverførerFra(
                         identitetsnummer = "11111111111",
-                        borINorge = true,
                         jobberINorge = true
                 ),
                 til = OverføreOmsorgsdagerBehov.OverførerTil(

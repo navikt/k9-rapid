@@ -13,8 +13,14 @@ data class OverføreOmsorgsdagerLøsning(
     fun erAvslått() = utfall.equals("Avslått", ignoreCase = true)
     fun ikkeBehandlesAvNyttSystem() = !erGjennomført()  && !erAvslått()
 
+    data class Navn(
+            val fornavn: String,
+            val mellomnavn: String?,
+            val etternavn: String
+    )
+
     data class Person(
-            val navn: String,
+            val navn: Navn?,
             val fødselsdato: LocalDate
     )
 
