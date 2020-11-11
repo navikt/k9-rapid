@@ -35,8 +35,8 @@ jobs:
         uses: actions/checkout@v1
       - name: Set release tag
         run: |
-          export TAG_NAME="1.$(git rev-parse --short HEAD)"
-          echo "RELEASE_TAG::$TAG_NAME" >> $GITHUB_ENV
+          TAG_NAME="1.$(git rev-parse --short HEAD)"
+          echo "RELEASE_TAG=$TAG_NAME" >> $GITHUB_ENV
       - name: Set changelog
         # (Escape newlines see https://github.com/actions/create-release/issues/25)
         run: |
@@ -44,7 +44,7 @@ jobs:
           text="${text//$'%'/%25}"
           text="${text//$'\n'/%0A}"
           text="${text//$'\r'/%0D}"
-          echo "CHANGELOG::$text" >> $GITHUB_ENV
+          echo "CHANGELOG=$text" >> $GITHUB_ENV
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
