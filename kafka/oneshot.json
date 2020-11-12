@@ -19,7 +19,10 @@
         {"member": "srvk9persopplysning", "role": "CONSUMER"}, 
         {"member": "srvk9punsj", "role": "PRODUCER"}, 
         {"member": "srvomsover-prs", "role": "PRODUCER"},
-        {"member": "srv-sif-innsyn-mtk", "role": "CONSUMER"} ],
+        {"member": "srv-k9-vaktmester", "role": "PRODUCER"},
+        {"member": "srv-k9-vaktmester", "role": "CONSUMER"},
+        {"member": "srv-sif-innsyn-mtk", "role": "CONSUMER"}
+      ],
       "numPartitions": 6
    }
  ] 
