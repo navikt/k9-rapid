@@ -4,6 +4,7 @@ import java.time.LocalDate
 import java.time.ZonedDateTime
 
 data class OverføreOmsorgsdagerLøsning(
+        val versjon: String,
         val løst: ZonedDateTime,
         val utfall: String,
         val begrunnelser: List<String> = listOf(),

@@ -1,7 +1,7 @@
 package no.nav.k9.rapid.behov
 
 import java.time.LocalDate
-import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class OverføreOmsorgsdagerBehov(
         val fra: OverførerFra,
@@ -11,18 +11,19 @@ class OverføreOmsorgsdagerBehov(
         val barn: List<Barn> = listOf(),
         val kilde: Kilde,
         val journalpostIder: List<String>,
-        val mottaksdato: LocalDate = LocalDate.now(OsloZoneId)
+        val mottatt: ZonedDateTime
 ) : Behov(
         navn = Navn,
         input = mapOf(
-                "fra" to fra,
-                "til" to til,
-                "omsorgsdagerTattUtIÅr" to omsorgsdagerTattUtIÅr,
-                "omsorgsdagerÅOverføre" to  omsorgsdagerÅOverføre,
-                "barn" to barn,
-                "kilde" to kilde.name,
-                "journalpostIder" to journalpostIder,
-                "mottaksdato" to mottaksdato
+            "versjon" to "1.0.0",
+            "fra" to fra,
+            "til" to til,
+            "omsorgsdagerTattUtIÅr" to omsorgsdagerTattUtIÅr,
+            "omsorgsdagerÅOverføre" to  omsorgsdagerÅOverføre,
+            "barn" to barn,
+            "kilde" to kilde.name,
+            "journalpostIder" to journalpostIder,
+            "mottatt" to mottatt
         )
 ) {
     override fun mangler() : List<String> {
@@ -59,25 +60,24 @@ class OverføreOmsorgsdagerBehov(
     }
 
     data class OverførerFra(
-            val identitetsnummer: String,
-            val jobberINorge: Boolean
+        val identitetsnummer: String,
+        val jobberINorge: Boolean
     )
 
     data class OverførerTil(
-            val identitetsnummer: String,
-            val relasjon: Relasjon,
-            val harBoddSammenMinstEttÅr: Boolean? = null
+        val identitetsnummer: String,
+        val relasjon: Relasjon,
+        val harBoddSammenMinstEttÅr: Boolean? = null
     )
 
     data class Barn(
-            val identitetsnummer: String,
-            val fødselsdato: LocalDate,
-            val aleneOmOmsorgen: Boolean,
-            val utvidetRett: Boolean
+        val identitetsnummer: String,
+        val fødselsdato: LocalDate,
+        val aleneOmOmsorgen: Boolean,
+        val utvidetRett: Boolean
     )
 
     internal companion object {
-        private val OsloZoneId = ZoneId.of("Europe/Oslo")
         private val journalpostIdRegex = "\\d+".toRegex()
         private val identitetsnummerRegex = "\\d{11}".toRegex()
         private fun String.erGyldigIdentitetsnummer() = this.matches(identitetsnummerRegex)

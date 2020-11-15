@@ -15,6 +15,7 @@ internal class OverføreOmsorgsdagerLøsningResolverTest {
     fun `Får løsning om meldingen inneholder løsning`() {
         val behovssekvens = gyldigBehovssekvens()
         val løsning = OverføreOmsorgsdagerLøsning(
+            versjon = "1.0.0",
             løst = nå(),
             utfall = "Gjennomført",
             begrunnelser = listOf("§9-6"),
