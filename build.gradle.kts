@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val junitJupiterVersion = "5.7.0"
 val jacksonVersion = "2.11.3"
+val ulidVersion = "8.2.0"
 
 plugins {
     kotlin("jvm") version "1.4.10"
@@ -29,7 +30,7 @@ subprojects {
         implementation(kotlin("stdlib"))
         implementation(kotlin("reflect"))
 
-        implementation("de.huxhorn.sulky:de.huxhorn.sulky.ulid:8.2.0")
+        implementation("de.huxhorn.sulky:de.huxhorn.sulky.ulid:$ulidVersion")
 
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
         implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
