@@ -50,7 +50,7 @@ class Behovssekvens(
     }
 
     companion object {
-        private val correlationIdRegex = "[a-zA-Z0-9_.\\-]{10,300}".toRegex()
+        private val correlationIdRegex = "[a-zA-Z0-9_.\\-]{10,100}".toRegex()
         private fun String.validerCorrelationId() = require(this.matches(correlationIdRegex)) {
             "Ugyldig correlationId"
         }

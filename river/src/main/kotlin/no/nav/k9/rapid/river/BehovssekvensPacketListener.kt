@@ -18,6 +18,13 @@ abstract class BehovssekvensPacketListener(
     abstract fun handlePacket(id: String, packet: JsonMessage) : Boolean
 
     /**
+     * kjøre vurdering om man skal kjøre 'handelePacket' eller ikke.
+     * Sjekke om man allerede håndtert melidingen, om ikke steget
+     * er idempotent.
+     */
+    open fun doHandlePacket(id: String, packet: JsonMessage) : Boolean = true
+
+    /**
      * kjøres etter at packet er sendt.
      * Lagre at packet er blitt håndtert
      */
@@ -30,6 +37,19 @@ abstract class BehovssekvensPacketListener(
         withMDC(mapOf(
             BehovssekvensIdKey to behovssekvensId,
             CorrelationIdKey to correlationId)) {
+
+            val doHandlePacket = try { doHandlePacket(
+                id = behovssekvensId,
+                packet = packet
+            )} catch (cause: Throwable) {
+                val error = "doHandlePacket kastet exception ${cause::class.simpleName}"
+                error.errorSecureLog(packet, cause)
+                throw IllegalStateException(error.seSikkerLogg())
+            }
+
+            if (!doHandlePacket) {
+                return@withMDC
+            }
 
             val handlePacketOk = try {
                 handlePacket(id = behovssekvensId, packet = packet).also { if (!it) {
