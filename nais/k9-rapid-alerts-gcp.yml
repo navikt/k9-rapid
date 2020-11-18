@@ -1,0 +1,31 @@
+apiVersion: "nais.io/v1"
+kind: "Alert"
+metadata:
+  name: k9-rapid-alerts
+  namespace: omsorgspenger
+  labels:
+    team: omsorgspenger
+spec:
+  receivers: # receivers for all alerts below
+    slack:
+      channel: '#omsorgspenger-alerts'
+      prependText: '<!here> | '
+  alerts:
+    - alert: applikasjon nede
+      expr: up{app=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger", job="kubernetes-pods"} == 0
+      for: 2m
+      description: "App {{ $labels.app }} er nede i namespace {{ $labels.kubernetes_namespace }}"
+      action: "`kubectl describe pod {{ $labels.kubernetes_pod_name }} -n {{ $labels.kubernetes_namespace }}` for events, og `kubectl logs {{ $labels.kubernetes_pod_name }} -c {{ $labels.app }} -n {{ $labels.kubernetes_namespace }}` for logger"
+    - alert: høy feilrate i logger
+      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger",log_level=~"Warning|Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger"}[3m]))) > 10
+      for: 3m
+      action: "Sjekk loggene til appen med `kubectl logs {{ $labels.kubernetes_pod_name }} -c {{ $labels.app }} -n {{ $labels.kubernetes_namespace }}` for å se hvorfor det er så mye feil"
+    - alert: feil i selftest
+      expr: selftests_aggregate_result_status{app=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger"} > 0
+      for: 1m
+      action: "Sjekk app {{ $labels.app }} i namespace {{ $labels.kubernetes_namespace }} sine selftest for å se hva som er galt"
+    - alert: kontinuerlig restart
+      expr: sum(increase(kube_pod_container_status_restarts_total{container=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger"}[30m])) by (container) > 2
+      for: 5m
+      description: "{{ $labels.container }} har restartet flere ganger siste halvtimen"
+      action: "Se `kubectl describe pod {{ $labels.container }} -n {{ $labels.kubernetes_namespace }}` for events, og `kubectl logs {{ $labels.kubernetes_pod_name }} -c {{ $labels.app }} -n {{ $labels.kubernetes_namespace }}` for logger"

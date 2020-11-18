@@ -1,0 +1,40 @@
+name: Deploy alerts to NAIS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apply-alerts:
+    name: Apply alerts to all clusters
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+
+      - name: Deploy to dev-fss
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
+          CLUSTER: dev-fss
+          RESOURCE: nais/k9-rapid-alerts-fss.yml
+
+      - name: Deploy to prod-fss
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
+          CLUSTER: prod-fss
+          RESOURCE: nais/k9-rapid-alerts-fss.yml
+
+      - name: Deploy to dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais/k9-rapid-alerts-gcp.yml
+
+      - name: Deploy to prod-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: nais/k9-rapid-alerts-gcp.yml
