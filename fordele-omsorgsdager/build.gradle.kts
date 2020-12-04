@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
     api(project(":behov"))
-    api(project(":losning"))
     testImplementation("org.skyscreamer:jsonassert:1.5.0")
 }
 

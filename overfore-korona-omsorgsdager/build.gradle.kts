@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     api(project(":behov"))
-    testImplementation("org.skyscreamer:jsonassert:1.5.0")
+    api(project(":losning"))
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -27,8 +27,8 @@ publishing {
         create<MavenPublication>("mavenJava") {
 
             pom {
-                name.set("midlertidig-alene")
-                description.set("Behov og Løsning på søknad om å bli ansett som midlertidig alene")
+                name.set("overfore-omsorgsdager")
+                description.set("Behov og Løsning på overføring av korona-omsorgsdager")
                 url.set("https://github.com/navikt/k9-rapid")
 
                 licenses {
