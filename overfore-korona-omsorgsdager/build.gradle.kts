@@ -27,7 +27,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
 
             pom {
-                name.set("overfore-omsorgsdager")
+                name.set("overfore-korona-omsorgsdager")
                 description.set("Behov og Løsning på overføring av korona-omsorgsdager")
                 url.set("https://github.com/navikt/k9-rapid")
 
