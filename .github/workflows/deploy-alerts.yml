@@ -1,7 +1,9 @@
 name: Deploy alerts to NAIS
 
 on:
-  workflow_dispatch:
+  push:
+    paths:
+      - 'nais/*'
 
 jobs:
   apply-alerts:
