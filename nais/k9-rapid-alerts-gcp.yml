@@ -12,18 +12,18 @@ spec:
       prependText: ${{ env.prependText }}
   alerts:
     - alert: applikasjon nede
-      expr: kube_deployment_status_replicas_available{deployment=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger", namespace="omsorgspenger"} == 0
+      expr: kube_deployment_status_replicas_available{deployment=~"k9.*|omsorgspenger.*", namespace="omsorgspenger"} == 0
       for: 3m
       description: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
       action: "`kubectl describe pod {{ $labels.deployment }} -n {{ $labels.namespace }}`"
 
     - alert: høy feilrate i logger
-      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger",log_level="Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger"}[3m]))) > 5
+      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"k9.*|omsorgspenger.*",log_level="Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"k9.*|omsorgspenger.*"}[3m]))) > 5
       for: 3m
       action: "Sjekk loggene til appen med `kubectl logs {{ $labels.log_pod_name }} -c {{ $labels.log_app }} -n {{ $labels.log_namespace }}` for å se hvorfor det er så mye feili"
 
     - alert: kontinuerlig restart
-      expr: sum(increase(kube_pod_container_status_restarts_total{container=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger"}[30m])) by (container, pod, namespace) > 5
+      expr: sum(increase(kube_pod_container_status_restarts_total{container=~"k9.*|omsorgspenger.*", namespace="omsorgspenger"}[30m])) by (container, pod, namespace) > 5
       for: 15m
       description: "{{ $labels.container }} har restartet flere ganger siste halvtimen"
       action: "Se `kubectl describe pod {{ $labels.container }} -n {{ $labels.namespace }}` for events, og `kubectl logs {{ $labels.pod }} -c {{ $labels.container }} -n {{ $labels.namespace }}` for logger"
