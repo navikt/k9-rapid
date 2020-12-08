@@ -17,6 +17,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
           CLUSTER: dev-fss
           RESOURCE: nais/k9-rapid-alerts-fss.yml
+          PREPENDTEXT: ''
 
       - name: Deploy to prod-fss
         uses: nais/deploy/actions/deploy@v1
@@ -24,6 +25,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
           CLUSTER: prod-fss
           RESOURCE: nais/k9-rapid-alerts-fss.yml
+          PREPENDTEXT: '<!here> | '
 
       - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v1
@@ -31,6 +33,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais/k9-rapid-alerts-gcp.yml
+          PREPENDTEXT: ''
 
       - name: Deploy to prod-gcp
         uses: nais/deploy/actions/deploy@v1
@@ -38,3 +41,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
           CLUSTER: prod-gcp
           RESOURCE: nais/k9-rapid-alerts-gcp.yml
+          PREPENDTEXT: '<!here> | '

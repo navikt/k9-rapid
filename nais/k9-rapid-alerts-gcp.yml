@@ -9,7 +9,7 @@ spec:
   receivers: # receivers for all alerts below
     slack:
       channel: '#omsorgspenger-alerts'
-      prependText: '<!here> | '
+      prependText: ${{ env.prependText }}
   alerts:
     - alert: applikasjon nede
       expr: kube_deployment_status_replicas_available{deployment=~"omsorgspenger-rammemeldinger|omsorgspenger-sak|omsorgspenger-journalforing|k9-personopplysninger", namespace="omsorgspenger"} == 0
