@@ -2,8 +2,10 @@ name: Deploy alerts to NAIS
 
 on:
   push:
+    paths-ignore:
+      - '**.md'
     paths:
-      - 'nais/*'
+      - 'alerts/*'
 
 jobs:
   deploy-to-dev-and-prod:
@@ -18,4 +20,4 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: ${{ matrix.cluster }}
-          RESOURCE: nais/k9-rapid-alerts-${{ matrix.cluster }}.yml
+          RESOURCE: alerts/${{ matrix.cluster }}.yml
