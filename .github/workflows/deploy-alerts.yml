@@ -19,4 +19,4 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: ${{ matrix.cluster }}
-          RESOURCE: alerts/${{ matrix.cluster }}.yml
+          RESOURCE: alerts/alerts-${{ matrix.cluster }}.yml
