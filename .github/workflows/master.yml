@@ -9,6 +9,7 @@ on:
       - 'CODEOWNERS'
       - 'kafka/oneshot.json'
       - 'alerts/*'
+      - '.github/workflows/deploy-alerts.yml'
     branches:
       - master
 
