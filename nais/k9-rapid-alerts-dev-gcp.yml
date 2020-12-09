@@ -9,11 +9,10 @@ spec:
   receivers: # receivers for all alerts below
     slack:
       channel: '#omsorgspenger-alerts'
-      prependText: ${{ env.prependText }}
   alerts:
     - alert: applikasjon nede
       expr: kube_deployment_status_replicas_available{deployment=~"k9.*|omsorgspenger.*", namespace="omsorgspenger"} == 0
-      for: 3m
+      for: 2m
       description: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
       action: "`kubectl describe pod {{ $labels.deployment }} -n {{ $labels.namespace }}`"
 
@@ -24,6 +23,6 @@ spec:
 
     - alert: kontinuerlig restart
       expr: sum(increase(kube_pod_container_status_restarts_total{container=~"k9.*|omsorgspenger.*", namespace="omsorgspenger"}[30m])) by (container, pod, namespace) > 5
-      for: 15m
+      for: 20m
       description: "{{ $labels.container }} har restartet flere ganger siste halvtimen"
       action: "Se `kubectl describe pod {{ $labels.container }} -n {{ $labels.namespace }}` for events, og `kubectl logs {{ $labels.pod }} -c {{ $labels.container }} -n {{ $labels.namespace }}` for logger"

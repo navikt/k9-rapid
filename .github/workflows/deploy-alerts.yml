@@ -6,41 +6,16 @@ on:
       - 'nais/*'
 
 jobs:
-  apply-alerts:
-    name: Apply alerts to all clusters
+  deploy-to-dev-and-prod:
+    name: Deploy to ${{ matrix.cluster }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cluster: [dev-fss, dev-gcp, prod-fss, prod-gcp]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-
-      - name: Deploy to dev-fss
-        uses: nais/deploy/actions/deploy@v1
+      - uses: actions/checkout@v2
+      - uses: nais/deploy/actions/deploy@v1
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
-          CLUSTER: dev-fss
-          RESOURCE: nais/k9-rapid-alerts-fss.yml
-          PREPENDTEXT: ''
-
-      - name: Deploy to prod-fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
-          CLUSTER: prod-fss
-          RESOURCE: nais/k9-rapid-alerts-fss.yml
-          PREPENDTEXT: '<!here> | '
-
-      - name: Deploy to dev-gcp
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
-          CLUSTER: dev-gcp
-          RESOURCE: nais/k9-rapid-alerts-gcp.yml
-          PREPENDTEXT: ''
-
-      - name: Deploy to prod-gcp
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_API_KEY }}
-          CLUSTER: prod-gcp
-          RESOURCE: nais/k9-rapid-alerts-gcp.yml
-          PREPENDTEXT: '<!here> | '
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: ${{ matrix.cluster }}
+          RESOURCE: nais/k9-rapid-alerts-${{ matrix.cluster }}.yml
