@@ -2,10 +2,9 @@ name: Deploy alerts to NAIS
 
 on:
   push:
-    paths-ignore:
-      - '**.md'
     paths:
       - 'alerts/*'
+      - '!alerts/README.md'
 
 jobs:
   deploy-to-dev-and-prod:
