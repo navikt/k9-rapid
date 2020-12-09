@@ -5,6 +5,8 @@ on:
     paths:
       - 'alerts/*'
       - '!alerts/README.md'
+    branches:
+      - master
 
 jobs:
   deploy-to-dev-and-prod:
