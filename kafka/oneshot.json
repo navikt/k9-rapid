@@ -24,7 +24,7 @@
         {"member": "srv-sif-innsyn-mtk", "role": "CONSUMER"},
         {"member": "srv-oms-alene-prs", "role": "PRODUCER"},
         {"member": "srv-omd-melding-prs", "role": "PRODUCER"},
-        {"member": "srvomsorgsdager", "role": "CONSUMER"}
+        {"member": "srvomsorgsdager", "role": "PRODUCER"}
       ],
       "numPartitions": 6
    }
