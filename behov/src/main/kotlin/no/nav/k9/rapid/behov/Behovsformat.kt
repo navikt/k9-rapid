@@ -34,4 +34,3 @@ object Behovsformat {
     fun nå() = ZonedDateTime.now(UTC)
     fun ZonedDateTime.iso8601() = ISO8601.format(this)
 }
-
