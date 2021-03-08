@@ -1,13 +1,10 @@
 package no.nav.k9.rapid.river
 
-import no.nav.helse.rapids_rivers.JsonMessage
-import no.nav.helse.rapids_rivers.MessageProblems
-import no.nav.helse.rapids_rivers.RapidsConnection
-import no.nav.helse.rapids_rivers.River
+import no.nav.helse.rapids_rivers.*
 
-internal class VoidMesageContext private constructor(): RapidsConnection.MessageContext {
-    override fun send(message: String) {}
-    override fun send(key: String, message: String) {}
+internal class VoidMesageContext private constructor(): MessageContext {
+    override fun publish(message: String) {}
+    override fun publish(key: String, message: String) {}
     internal companion object {
         val Instance = VoidMesageContext()
     }
@@ -29,13 +26,13 @@ internal class SisteUtfallPacketListener: River.PacketListener {
             null, null, null
     )
 
-    override fun onPacket(packet: JsonMessage, context: RapidsConnection.MessageContext) {
+    override fun onPacket(packet: JsonMessage, context: MessageContext) {
         sisteMelding = Triple(packet, null, null)
     }
-    override fun onSevere(error: MessageProblems.MessageException, context: RapidsConnection.MessageContext) {
+    override fun onSevere(error: MessageProblems.MessageException, context: MessageContext) {
         sisteMelding = Triple(null,  error, null)
     }
-    override fun onError(problems: MessageProblems, context: RapidsConnection.MessageContext) {
+    override fun onError(problems: MessageProblems, context: MessageContext) {
         sisteMelding = Triple(null, null, problems)
     }
     internal fun sistUtfall() : Pair<Utfall, String> = when {

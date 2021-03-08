@@ -37,10 +37,10 @@ internal class SistEndretTest {
         assertNotNull(opprettet)
         assertEquals(opprettet, sistEndret)
 
-        val messageContext = object: RapidsConnection.MessageContext {
+        val messageContext = object: MessageContext {
             var message: String? = null
-            override fun send(message: String) = throw IllegalStateException("Ikke brukt.")
-            override fun send(key: String, message: String) {
+            override fun publish(message: String) = throw IllegalStateException("Ikke brukt.")
+            override fun publish(key: String, message: String) {
                 this.message = message
             }
             fun jsonMessage() = JsonMessage(message!!, MessageProblems(message!!)).also { it.interestedIn("@sistEndret") }
