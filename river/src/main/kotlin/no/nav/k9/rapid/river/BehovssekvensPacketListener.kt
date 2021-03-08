@@ -1,7 +1,7 @@
 package no.nav.k9.rapid.river
 
 import no.nav.helse.rapids_rivers.JsonMessage
-import no.nav.helse.rapids_rivers.RapidsConnection
+import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.River
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -30,7 +30,7 @@ abstract class BehovssekvensPacketListener(
      */
     open fun onSent(id: String, packet: JsonMessage) {}
 
-    override fun onPacket(packet: JsonMessage, context: RapidsConnection.MessageContext) {
+    override fun onPacket(packet: JsonMessage, context: MessageContext) {
         val behovssekvensId = packet.behovssekvensId()
         val correlationId = packet.correlationId()
 

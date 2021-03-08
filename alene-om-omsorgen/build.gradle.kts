@@ -1,24 +1,11 @@
-val rapidsAndRiversVersion = "1.a77261b"
-
 plugins {
     id("java")
     id("maven-publish")
 }
 
 dependencies {
-    api("com.github.navikt:rapids-and-rivers:$rapidsAndRiversVersion")
     api(project(":behov"))
-}
-
-repositories {
-    maven {
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/navikt/rapids-and-rivers")
-        credentials {
-            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_USERNAME")
-            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
-        }
-    }
+    testImplementation("org.skyscreamer:jsonassert:1.5.0")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -40,8 +27,8 @@ publishing {
         create<MavenPublication>("mavenJava") {
 
             pom {
-                name.set("river")
-                description.set("Riververktøy")
+                name.set("alene-om-omsorgen")
+                description.set("Behov for å registrere person som alene om omsorgen")
                 url.set("https://github.com/navikt/k9-rapid")
 
                 licenses {
