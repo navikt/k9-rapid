@@ -6,7 +6,7 @@ import org.skyscreamer.jsonassert.JSONAssert
 import java.time.LocalDate
 import java.util.*
 
-internal class MidlertidigAleneBehovTest {
+internal class AleneOmOmsorgenBehovTest {
 
     @Test
     fun `Gyldig behov for alene om omsorgen`() {
