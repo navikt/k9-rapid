@@ -36,7 +36,9 @@ abstract class BehovssekvensPacketListener(
         val behovssekvensId = packet.behovssekvensId()
         val correlationId = packet.correlationId()
 
-        val mdcMap = mdcPaths.mapValues { it -> when (packet[it.value].isMissingOrNull()) {
+        packet.interestedIn(*mdcPaths.values.toTypedArray())
+
+        val mdcMap = mdcPaths.mapValues { when (packet[it.value].isMissingOrNull()) {
             true -> null
             false -> packet[it.value].asText()
         }}.filterValues { it != null }.mapValues { it.value!! }
