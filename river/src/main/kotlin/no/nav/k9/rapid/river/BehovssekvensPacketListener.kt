@@ -3,12 +3,14 @@ package no.nav.k9.rapid.river
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.helse.rapids_rivers.MessageContext
 import no.nav.helse.rapids_rivers.River
+import no.nav.helse.rapids_rivers.isMissingOrNull
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 
 abstract class BehovssekvensPacketListener(
-    protected val logger: Logger) : River.PacketListener {
+    protected val logger: Logger,
+    private val mdcPaths: Map<String, String> = emptyMap()) : River.PacketListener {
     protected val secureLogger = LoggerFactory.getLogger("tjenestekall")
 
     /**
@@ -34,10 +36,14 @@ abstract class BehovssekvensPacketListener(
         val behovssekvensId = packet.behovssekvensId()
         val correlationId = packet.correlationId()
 
-        withMDC(mapOf(
-            BehovssekvensIdKey to behovssekvensId,
-            CorrelationIdKey to correlationId)) {
+        val mdcMap = mdcPaths.mapValues { it -> when (packet[it.value].isMissingOrNull()) {
+            true -> null
+            false -> packet[it.value].asText()
+        }}.filterValues { it != null }.mapValues { it.value!! }
+            .plus(BehovssekvensIdKey to behovssekvensId)
+            .plus(CorrelationIdKey to correlationId)
 
+        withMDC(mdcMap) {
             val doHandlePacket = try { doHandlePacket(
                 id = behovssekvensId,
                 packet = packet
