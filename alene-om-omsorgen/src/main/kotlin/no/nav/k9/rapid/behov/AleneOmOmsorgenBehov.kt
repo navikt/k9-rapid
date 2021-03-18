@@ -9,12 +9,11 @@ class AleneOmOmsorgenBehov(
 ) : Behov(
     navn = Navn,
     input = mapOf(
-        "versjon" to "1.0.0",
+        "versjon" to "1.1.0",
         "identitetsnummer" to identitetsnummer,
         "mottaksdato" to "$mottaksdato",
         "barn" to barn.map { b -> mapOf(
-            "identitetsnummer" to b.identitetsnummer,
-            "fødselsdato" to "${b.fødselsdato}"
+            "identitetsnummer" to b.identitetsnummer
         )}.also { require(it.isNotEmpty()) { "Må inneholde minst et barn." }}
     )) {
 
@@ -25,6 +24,10 @@ class AleneOmOmsorgenBehov(
             mangler.add("identitesnummer er ugylidig.")
         }
 
+        if (barn.isEmpty()) {
+            mangler.add("Må settes minst et barn.")
+        }
+
         barn.forEachIndexed { index, barn ->
             if (!barn.identitetsnummer.erGyldigIdentitetsnummer()) mangler.add("barn[$index].identitetsnummer er ugyldig.")
         }
@@ -33,8 +36,7 @@ class AleneOmOmsorgenBehov(
     }
 
     data class Barn(
-        val identitetsnummer: String,
-        val fødselsdato: LocalDate
+        val identitetsnummer: String
     )
 
     internal companion object {
