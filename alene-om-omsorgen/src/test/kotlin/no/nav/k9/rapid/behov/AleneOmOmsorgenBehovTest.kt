@@ -19,15 +19,13 @@ internal class AleneOmOmsorgenBehovTest {
 
         val forventet = """
             {
-                "versjon": "1.0.0",
+                "versjon": "1.1.0",
                 "identitetsnummer": "11111111111",
                 "mottaksdato": "$mottaksdato",
                 "barn": [{
-                    "identitetsnummer": "11111111112",
-                    "fødselsdato": "2005-05-05"
+                    "identitetsnummer": "11111111112"
                 }, {
-                    "identitetsnummer": "11111111113",
-                    "fødselsdato": "2010-01-04"
+                    "identitetsnummer": "11111111113"
                 }]
             }
         """.trimIndent()
@@ -46,8 +44,8 @@ private fun behov(
     mottaksdato = mottaksdato,
     identitetsnummer = "11111111111",
     barn = listOf(
-        AleneOmOmsorgenBehov.Barn(identitetsnummer = "11111111112", fødselsdato = LocalDate.parse("2005-05-05")),
-        AleneOmOmsorgenBehov.Barn(identitetsnummer = "11111111113", fødselsdato = LocalDate.parse("2010-01-04"))
+        AleneOmOmsorgenBehov.Barn(identitetsnummer = "11111111112"),
+        AleneOmOmsorgenBehov.Barn(identitetsnummer = "11111111113")
     )
 )
 
