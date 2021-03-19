@@ -26,7 +26,9 @@
         {"member": "srv-omd-melding-prs", "role": "PRODUCER"},
         {"member": "srvomsorgsdager", "role": "PRODUCER"},
         {"member": "srvomsorgsdager", "role": "CONSUMER"},
-        {"member": "srvk9sak", "role": "PRODUCER"}
+        {"member": "srvk9sak", "role": "PRODUCER"},
+        {"member": "srvomsutarb-prs", "role": "PRODUCER"},
+        {"member": "srvomsut-prs", "role": "PRODUCER"}
       ],
       "numPartitions": 6
    }
