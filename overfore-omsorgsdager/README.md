@@ -9,7 +9,7 @@ Så lenge key og value på entryen man legger på topicen er fra `keyValue` i en
 - `id` må være en [ULID](https://github.com/ulid/spec) og ideelt sett genereres i klienten og er ny for hver overføring.
 
 ```kotlin
-val rapidTopic = "k9-rapid-v1"
+val rapidTopic = "k9-rapid-v2"
 val producer = KafkaProducer(producerConfig, stringSerializer, stringSerializer)
 
 val (id, overføring) = Behovssekvens(
@@ -61,7 +61,7 @@ if (id.erNyereEnn(gammelId)) {
 - Om løsningen `ikkeBehandlesAvNyttSystem()` har ingen overføringer blitt gjort, og inneholder heller ingen overføringer som ble forsøkt gjort da dette er sendt til behandling utenom nytt system.
 
 ```kotlin
-val rapidTopic = "k9-rapid-v1"
+val rapidTopic = "k9-rapid-v2"
 val consumer = KafkaConsumer(consumerConfig, stringDeserializer, stringDeserializer).also {
     it.subsribe(rapidTopic)
 }
