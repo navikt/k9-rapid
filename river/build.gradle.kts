@@ -1,4 +1,4 @@
-val rapidsAndRiversVersion = "1.f3e5de3"
+val rapidsAndRiversVersion = "20210414120736-3c6229a"
 
 plugins {
     id("java")
@@ -12,12 +12,7 @@ dependencies {
 
 repositories {
     maven {
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/navikt/rapids-and-rivers")
-        credentials {
-            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_USERNAME")
-            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
-        }
+        url = uri("https://jitpack.io")
     }
 }
 
