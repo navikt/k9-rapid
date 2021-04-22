@@ -7,9 +7,10 @@ on:
       - '.gitignore'
       - 'LICENCE'
       - 'CODEOWNERS'
-      - 'kafka/oneshot.json'
+      - 'kafka/*'
       - 'alerts/*'
       - '.github/workflows/deploy-alerts.yml'
+      - '.github/workflows/deploy-kafka.yml'
     branches:
       - master
 
@@ -18,9 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: '12.x'
+          java-version: '12'
+          distribution: 'adopt'
       - name: test and build
         run: ./gradlew -Pversion="1.$(git rev-parse --short HEAD)" build publish
         env:
