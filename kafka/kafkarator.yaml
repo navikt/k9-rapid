@@ -24,3 +24,6 @@ spec:
     - team: omsorgspenger
       application: k9-punsjbolle
       access: readwrite
+    - team: k9saksbehandling
+      application: k9-punsj
+      access: write
