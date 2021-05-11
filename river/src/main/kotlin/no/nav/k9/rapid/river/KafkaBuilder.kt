@@ -16,9 +16,14 @@ import java.util.*
 object KafkaBuilder {
     private val log = LoggerFactory.getLogger(KafkaBuilder::class.java)
 
-    fun Environment.kafkaProducer(navn: String): KafkaProducer<String, String> {
+    fun Environment.kafkaProducer(navn: String) =
+        kafkaProducer(navn, BaseProperties.resolve(this))
+
+    fun Environment.kafkaProducerOnPrem(navn: String) =
+        kafkaProducer(navn, BaseProperties.onPrem(this))
+
+    private fun Environment.kafkaProducer(navn: String, baseConfig: Properties): KafkaProducer<String, String> {
         require(navn.isNotBlank()) { "Må sette navn på producer." }
-        val baseConfig = BaseProperties.resolve(this)
         val clientId = generateClientId()
         val producerConfig = baseConfig.withProducerConfig(clientId, navn)
         return KafkaProducer(
@@ -43,7 +48,6 @@ object KafkaBuilder {
         return UUID.randomUUID().toString()
     }
 
-
     private object BaseProperties {
         fun resolve(environment: Environment) : Properties {
             return when (environment.hentOptionalEnv("KAFKA_PREFER_ON_PREM") == "true") {
@@ -52,7 +56,7 @@ object KafkaBuilder {
             }
         }
 
-        private fun onPrem(environment: Environment) = Properties().apply {
+        fun onPrem(environment: Environment) = Properties().apply {
             val credentials = username()?.let { username ->
                 username to password()
             }
