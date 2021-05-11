@@ -33,3 +33,14 @@ spec:
     - team: omsorgspenger
       application: omsorgspenger-journalforing
       access: readwrite
+    - team: omsorgspenger
+      application: omsorgspenger-sak
+      access: readwrite
+    - team: omsorgspenger
+      application: omsorgspenger-rammemeldinger
+      access: readwrite
+    - team: omsorgspenger
+      application: omsorgsdager
+      access: readwrite
+
+
