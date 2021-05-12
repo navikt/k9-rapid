@@ -8,6 +8,7 @@ on:
       - 'kafka/prod.json'
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   deploy-dev:
