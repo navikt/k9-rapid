@@ -13,12 +13,9 @@
         {"member": "srvomsover-prs", "role": "PRODUCER"},
         {"member": "srv-k9-vaktmester", "role": "PRODUCER"},
         {"member": "srv-k9-vaktmester", "role": "CONSUMER"},
-        {"member": "srv-sif-innsyn-mtk", "role": "CONSUMER"},
         {"member": "srv-oms-alene-prs", "role": "PRODUCER"},
         {"member": "srv-omd-melding-prs", "role": "PRODUCER"},
-        {"member": "srvk9sak", "role": "PRODUCER"},
-        {"member": "srvomsutarb-prs", "role": "PRODUCER"},
-        {"member": "srvomsut-prs", "role": "PRODUCER"}
+        {"member": "srvk9sak", "role": "PRODUCER"}
       ],
       "numPartitions": 6
    }
