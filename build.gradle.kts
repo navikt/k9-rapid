@@ -1,12 +1,12 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val junitJupiterVersion = "5.7.1"
+val junitJupiterVersion = "5.7.2"
 val jacksonVersion = "2.12.3"
 val ulidVersion = "8.2.0"
 
 plugins {
-    kotlin("jvm") version "1.5.0"
+    kotlin("jvm") version "1.5.10"
 }
 
 repositories {
