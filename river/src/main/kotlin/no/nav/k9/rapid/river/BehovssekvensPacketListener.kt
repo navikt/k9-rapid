@@ -21,8 +21,9 @@ abstract class BehovssekvensPacketListener(
 
     /**
      * kjøre vurdering om man skal kjøre 'handelePacket' eller ikke.
-     * Sjekke om man allerede håndtert melidingen, om ikke steget
-     * er idempotent.
+     * Sjekke om man allerede har håndtert meldingen, om ikke steget
+     * er idempotent eller om det er en melding som skal settes 'på vent'.
+     * return false/ kaster exception: går ikke videre til handlePacket.
      */
     open fun doHandlePacket(id: String, packet: JsonMessage) : Boolean = true
 
@@ -50,9 +51,10 @@ abstract class BehovssekvensPacketListener(
                 id = behovssekvensId,
                 packet = packet
             )} catch (cause: Throwable) {
-                val error = "doHandlePacket kastet exception ${cause::class.simpleName}"
-                error.errorSecureLog(packet, cause)
-                throw IllegalStateException(error.seSikkerLogg())
+                "doHandlePacket kastet exception ${cause::class.simpleName}".also { error ->
+                    error.errorApplicationLog()
+                    error.errorSecureLog(packet, cause)
+                }.let { false }
             }
 
             if (!doHandlePacket) {
