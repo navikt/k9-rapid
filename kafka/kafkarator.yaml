@@ -42,5 +42,7 @@ spec:
     - team: omsorgspenger
       application: omsorgsdager
       access: readwrite
-
+    - team: omsorgspenger
+      application: k9-vaktmesterassistent
+      access: write
 
