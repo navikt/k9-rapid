@@ -1,5 +1,7 @@
 package no.nav.k9.rapid.river
 
+import no.nav.k9.rapid.river.KafkaBuilder.BaseProperties.erAiven
+import no.nav.k9.rapid.river.KafkaBuilder.BaseProperties.erOnPrem
 import org.apache.kafka.clients.CommonClientConfigs
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
@@ -20,7 +22,14 @@ object KafkaBuilder {
         kafkaProducer(navn, BaseProperties.resolve(this))
 
     fun Environment.kafkaProducerOnPrem(navn: String) =
-        kafkaProducer(navn, BaseProperties.onPrem(this))
+        kafkaProducer(navn, BaseProperties.onPrem(this)).also {
+            require(erAiven()) { "Skal kun brukes om man kjører på Aiven og trenger en OnPrem-producer." }
+        }
+
+    fun Environment.kafkaProducerAiven(navn: String) =
+        kafkaProducer(navn, BaseProperties.aiven(this)).also {
+            require(erOnPrem()) { "Skal kun brukes om man kjører OnPrem og trenger en Aiven-producer." }
+        }
 
     private fun Environment.kafkaProducer(navn: String, baseConfig: Properties): KafkaProducer<String, String> {
         require(navn.isNotBlank()) { "Må sette navn på producer." }
@@ -49,8 +58,11 @@ object KafkaBuilder {
     }
 
     private object BaseProperties {
+        fun Environment.erOnPrem() = hentOptionalEnv("KAFKA_PREFER_ON_PREM") == "true"
+        fun Environment.erAiven() = !erOnPrem()
+
         fun resolve(environment: Environment) : Properties {
-            return when (environment.hentOptionalEnv("KAFKA_PREFER_ON_PREM") == "true") {
+            return when (environment.erOnPrem()) {
                 true -> log.info("Henter on prem config ettersom KAFKA_PREFER_ON_PREM er satt til true.").let { onPrem(environment) }
                 false -> log.info("Henter aiven config").let { aiven(environment) }
             }
@@ -98,7 +110,7 @@ object KafkaBuilder {
             "Mangler passord på path '/var/run/secrets/nais.io/service_user/password'"
         }
 
-        private fun aiven(environment: Environment) = Properties().apply {
+        internal fun aiven(environment: Environment) = Properties().apply {
             put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, environment.hentRequiredEnv("KAFKA_BROKERS"))
             put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, SecurityProtocol.SSL.name)
             put(SslConfigs.SSL_ENDPOINT_IDENTIFICATION_ALGORITHM_CONFIG, "")
