@@ -24,7 +24,7 @@ jobs:
           java-version: '12'
           distribution: 'adopt'
       - name: test and build
-        run: ./gradlew -Pversion="1.$(git rev-parse --short HEAD)" build publish
+        run: ./gradlew -Pversion="1.$(date "+%Y%m%d%H%M%S")-$(git rev-parse --short HEAD)" build publish
         env:
           GITHUB_USERNAME: x-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
