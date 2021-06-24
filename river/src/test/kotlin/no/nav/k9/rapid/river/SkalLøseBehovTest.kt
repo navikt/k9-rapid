@@ -7,6 +7,7 @@ import no.nav.k9.rapid.behov.Behovssekvens
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.util.UUID
 
 internal class SkalLøseBehovTest {
@@ -40,6 +41,7 @@ internal class SkalLøseBehovTest {
     @Test
     fun `Skal ikke løses enda`() {
         val message = behovssekvens.keyValue.second
+        assertEquals("Foo", behovssekvens.somJsonMessage().aktueltBehov())
         river.onMessage(message, VoidMesageContext.Instance)
         val (sisteUtfall, error) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Error, sisteUtfall)
@@ -50,7 +52,7 @@ internal class SkalLøseBehovTest {
     fun `Skal løses nå`() {
         val message = behovssekvens.somJsonMessage().also {
             it.leggTilLøsning("Foo", mapOf("løsning" to true))
-        }.toJson()
+        }.also { assertEquals(TestBehov, it.aktueltBehov()) }.toJson()
         river.onMessage(message, VoidMesageContext.Instance)
         val (sisteUtfall, _) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Packet, sisteUtfall)
@@ -60,7 +62,7 @@ internal class SkalLøseBehovTest {
     fun `Er allerede løst`() {
         val message = behovssekvens.somJsonMessage().also {
             it.leggTilLøsning(TestBehov, mapOf("løsning" to true))
-        }.toJson()
+        }.also { assertEquals("Foo", it.aktueltBehov()) }.toJson()
         river.onMessage(message, VoidMesageContext.Instance)
         val (sisteUtfall, error) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Error, sisteUtfall)
@@ -96,9 +98,18 @@ internal class SkalLøseBehovTest {
 
         val message = behovssekvens.somJsonMessage().also {
             it.leggTilLøsning("Foo", mapOf("løsning" to true))
-        }.toJson()
+        }.also { assertEquals(TestBehovMedSuffix, it.aktueltBehov()) }.toJson()
         river.onMessage(message, VoidMesageContext.Instance)
         val (sisteUtfall, _) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Packet, sisteUtfall)
+    }
+
+    @Test
+    fun `Klar til arkivering`() {
+        val message = behovssekvens.somJsonMessage().also {
+            it.leggTilLøsning("Foo", mapOf("løsning" to true))
+            it.leggTilLøsning(TestBehov, mapOf("løsning" to true))
+        }
+        assertThrows<IllegalArgumentException> { message.aktueltBehov() }
     }
 }

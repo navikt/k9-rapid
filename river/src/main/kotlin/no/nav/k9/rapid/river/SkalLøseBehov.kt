@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.node.TextNode
 import no.nav.helse.rapids_rivers.JsonMessage
+import no.nav.helse.rapids_rivers.isMissingOrNull
 import no.nav.k9.rapid.behov.Behovsformat
 import no.nav.k9.rapid.behov.Behovssekvens
 
@@ -68,10 +69,13 @@ fun JsonMessage.skalLøseBehov(behov: String) {
     }
 }
 
-private fun JsonMessage.aktueltBehov() : String {
+fun JsonMessage.aktueltBehov() : String {
     require(erBehovssekvens(this)) { "Meldingen er ikke en behovssekvens" }
     val behovsrekkefølge = (get(Behovsformat.Behovsrekkefølge) as ArrayNode).map { it.asText() }
-    val løsninger = (get(Løsninger) as ObjectNode).fieldNames().asSequence().toList()
+    val løsninger = when (get(Løsninger).isMissingOrNull()) {
+        true -> emptyList()
+        false -> (get(Løsninger) as ObjectNode).fieldNames().asSequence().toList()
+    }
     return requireNotNull(behovsrekkefølge.firstOrNull { !løsninger.contains(it) }) {
         "Feil bruk av aktueltBehov, meldingen har inget aktuelt behov."
     }
