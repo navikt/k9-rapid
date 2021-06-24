@@ -75,4 +75,30 @@ internal class SkalLøseBehovTest {
         assertEquals(SisteUtfallPacketListener.Utfall.Severe, sisteUtfall)
         assertTrue(severe.contains("@behovsrekkefølge"))
     }
+
+    @Test
+    fun `Skal løse behov med suffix`() {
+        val TestBehovMedSuffix = "TestBehov@journalføring"
+        val sisteUtfallPacketListener = SisteUtfallPacketListener()
+        val behovssekvens = Behovssekvens(
+            id = ULID().nextULID(),
+            correlationId = UUID.randomUUID().toString(),
+            behov = arrayOf(
+                Behov(navn = "Foo"),
+                Behov(navn = TestBehovMedSuffix)
+            )
+        )
+
+        val river = River(VoidRapidsConnection.Instance).apply {
+            register(sisteUtfallPacketListener)
+            validate { it.skalLøseBehov(TestBehov) }
+        }
+
+        val message = behovssekvens.somJsonMessage().also {
+            it.leggTilLøsning("Foo", mapOf("løsning" to true))
+        }.toJson()
+        river.onMessage(message, VoidMesageContext.Instance)
+        val (sisteUtfall, _) = sisteUtfallPacketListener.sistUtfall()
+        assertEquals(SisteUtfallPacketListener.Utfall.Packet, sisteUtfall)
+    }
 }

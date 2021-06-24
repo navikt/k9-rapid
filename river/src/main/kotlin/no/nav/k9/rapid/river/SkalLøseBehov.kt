@@ -1,6 +1,7 @@
 package no.nav.k9.rapid.river
 
 import com.fasterxml.jackson.databind.node.ArrayNode
+import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.node.TextNode
 import no.nav.helse.rapids_rivers.JsonMessage
 import no.nav.k9.rapid.behov.Behovsformat
@@ -33,9 +34,9 @@ internal fun erBehovssekvens(jsonMessage: JsonMessage) : Boolean {
 fun JsonMessage.skalLøseBehov(behov: String) {
     if (!erBehovssekvens(this)) return
 
-    val behovsrekkefølge = get(Behovsformat.Behovsrekkefølge) as ArrayNode
+    val behovsrekkefølge = (get(Behovsformat.Behovsrekkefølge) as ArrayNode).map { it.asText() }
 
-    val behovIndex = behovsrekkefølge.indexOf(TextNode(behov))
+    val behovIndex = behovsrekkefølge.indexOfFirst { it == behov || it.startsWith("${behov}@") }
 
     if (behovIndex == -1) {
         requireContains(Behovsformat.Behovsrekkefølge, behov)
@@ -44,7 +45,7 @@ fun JsonMessage.skalLøseBehov(behov: String) {
 
     val forrigeBehov = when (behovIndex == 0) {
         true -> null
-        false -> behovsrekkefølge[behovIndex-1].asText()
+        false -> behovsrekkefølge[behovIndex-1]
     }
 
     val løsninger = get(Løsninger)
@@ -59,10 +60,19 @@ fun JsonMessage.skalLøseBehov(behov: String) {
         forrigeBehov != null && løsninger.hasNonNull(forrigeBehov) -> return
         // Venter på andre behov
         else -> {
-            behovsrekkefølge.map { it.asText() }.forEach {
+            behovsrekkefølge.forEach {
                 if (it == behov) return
                 requireKey("$Løsninger.$it")
             }
         }
+    }
+}
+
+private fun JsonMessage.aktueltBehov() : String {
+    require(erBehovssekvens(this)) { "Meldingen er ikke en behovssekvens" }
+    val behovsrekkefølge = (get(Behovsformat.Behovsrekkefølge) as ArrayNode).map { it.asText() }
+    val løsninger = (get(Løsninger) as ObjectNode).fieldNames().asSequence().toList()
+    return requireNotNull(behovsrekkefølge.firstOrNull { !løsninger.contains(it) }) {
+        "Feil bruk av aktueltBehov, meldingen har inget aktuelt behov."
     }
 }
