@@ -69,14 +69,16 @@ fun JsonMessage.skalLøseBehov(behov: String) {
     }
 }
 
-fun JsonMessage.aktueltBehov() : String {
+fun JsonMessage.aktueltBehovOrNull() : String? {
     require(erBehovssekvens(this)) { "Meldingen er ikke en behovssekvens" }
     val behovsrekkefølge = (get(Behovsformat.Behovsrekkefølge) as ArrayNode).map { it.asText() }
     val løsninger = when (get(Løsninger).isMissingOrNull()) {
         true -> emptyList()
         false -> (get(Løsninger) as ObjectNode).fieldNames().asSequence().toList()
     }
-    return requireNotNull(behovsrekkefølge.firstOrNull { !løsninger.contains(it) }) {
-        "Feil bruk av aktueltBehov, meldingen har inget aktuelt behov."
-    }
+    return behovsrekkefølge.firstOrNull { !løsninger.contains(it) }
+}
+
+fun JsonMessage.aktueltBehov() = requireNotNull(aktueltBehovOrNull()) {
+    "Feil bruk av aktueltBehov, meldingen har inget aktuelt behov."
 }

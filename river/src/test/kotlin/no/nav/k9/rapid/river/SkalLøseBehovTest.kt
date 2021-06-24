@@ -4,8 +4,7 @@ import de.huxhorn.sulky.ulid.ULID
 import no.nav.helse.rapids_rivers.River
 import no.nav.k9.rapid.behov.Behov
 import no.nav.k9.rapid.behov.Behovssekvens
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.util.UUID
@@ -111,5 +110,6 @@ internal class SkalLøseBehovTest {
             it.leggTilLøsning(TestBehov, mapOf("løsning" to true))
         }
         assertThrows<IllegalArgumentException> { message.aktueltBehov() }
+        assertNull(message.aktueltBehovOrNull())
     }
 }
