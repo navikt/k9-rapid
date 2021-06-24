@@ -60,7 +60,7 @@ fun JsonMessage.skalLøseBehov(behov: String) : String? {
             return null
         }
         // Skal løses nå
-        forrigeBehov != null && løsninger.hasNonNull(forrigeBehov) -> return aktueltBehov
+        behovIndex == 0 || (forrigeBehov != null && løsninger.hasNonNull(forrigeBehov)) -> return aktueltBehov
         // Venter på andre behov
         else -> {
             behovsrekkefølge.forEach {
