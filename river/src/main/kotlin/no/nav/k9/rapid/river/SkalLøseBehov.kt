@@ -32,8 +32,8 @@ internal fun erBehovssekvens(jsonMessage: JsonMessage) : Boolean {
     }
 }
 
-fun JsonMessage.skalLøseBehov(behov: String) {
-    if (!erBehovssekvens(this)) return
+fun JsonMessage.skalLøseBehov(behov: String) : String? {
+    if (!erBehovssekvens(this)) return null
 
     val behovsrekkefølge = (get(Behovsformat.Behovsrekkefølge) as ArrayNode).map { it.asText() }
 
@@ -41,8 +41,10 @@ fun JsonMessage.skalLøseBehov(behov: String) {
 
     if (behovIndex == -1) {
         requireContains(Behovsformat.Behovsrekkefølge, behov)
-        return
+        return null
     }
+
+    val aktueltBehov = behovsrekkefølge[behovIndex]
 
     val forrigeBehov = when (behovIndex == 0) {
         true -> null
@@ -53,20 +55,22 @@ fun JsonMessage.skalLøseBehov(behov: String) {
 
     when {
         // Allerede løst
-        løsninger.hasNonNull(behov) -> {
-            require("$Løsninger.$behov") { throw IllegalStateException("Behov allerede løst.") }
-            return
+        løsninger.hasNonNull(aktueltBehov) -> {
+            require("$Løsninger.$aktueltBehov") { throw IllegalStateException("Behov allerede løst.") }
+            return null
         }
         // Skal løses nå
-        forrigeBehov != null && løsninger.hasNonNull(forrigeBehov) -> return
+        forrigeBehov != null && løsninger.hasNonNull(forrigeBehov) -> return aktueltBehov
         // Venter på andre behov
         else -> {
             behovsrekkefølge.forEach {
-                if (it == behov) return
+                if (it == aktueltBehov) return null
                 requireKey("$Løsninger.$it")
             }
         }
     }
+
+    return null
 }
 
 fun JsonMessage.aktueltBehovOrNull() : String? {
