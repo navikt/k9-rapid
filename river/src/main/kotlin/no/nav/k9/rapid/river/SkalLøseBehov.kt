@@ -32,39 +32,46 @@ internal fun erBehovssekvens(jsonMessage: JsonMessage) : Boolean {
     }
 }
 
+private fun String.erMatchendeBehov(behov: String) =
+    this == behov || this.startsWith("${behov}@")
+
 fun JsonMessage.skalLøseBehov(behov: String) : String? {
     if (!erBehovssekvens(this)) return null
 
     val behovsrekkefølge = (get(Behovsformat.Behovsrekkefølge) as ArrayNode).map { it.asText() }
+    val løsninger = get(Løsninger)
 
-    val behovIndex = behovsrekkefølge.indexOfFirst { it == behov || it.startsWith("${behov}@") }
-
-    if (behovIndex == -1) {
+    // Behovet finnes ikke i behovsrekkefølgen
+    if (behovsrekkefølge.firstOrNull { it.erMatchendeBehov(behov) } == null) {
         requireContains(Behovsformat.Behovsrekkefølge, behov)
         return null
     }
 
-    val aktueltBehov = behovsrekkefølge[behovIndex]
-
-    val forrigeBehov = when (behovIndex == 0) {
-        true -> null
-        false -> behovsrekkefølge[behovIndex-1]
+    // Finner index for første match som ikke har en løsning
+    val uløstBehovIndex = behovsrekkefølge.indexOfFirst {
+        it.erMatchendeBehov(behov) && !løsninger.hasNonNull(it)
     }
 
-    val løsninger = get(Løsninger)
+    // Om det ikke finnes noen index for første match som ikke har løsning er alle matchende behov løst
+    if (uløstBehovIndex == -1) {
+        require("$Løsninger.$behov") { throw IllegalStateException("Alle matchende behov allerede løst.") }
+        return null
+    }
+
+    val uløstBehov = behovsrekkefølge[uløstBehovIndex]
+
+    val forrigeBehov = when (uløstBehovIndex == 0) {
+        true -> null
+        false -> behovsrekkefølge[uløstBehovIndex-1]
+    }
 
     when {
-        // Allerede løst
-        løsninger.hasNonNull(aktueltBehov) -> {
-            require("$Løsninger.$aktueltBehov") { throw IllegalStateException("Behov allerede løst.") }
-            return null
-        }
         // Skal løses nå
-        behovIndex == 0 || (forrigeBehov != null && løsninger.hasNonNull(forrigeBehov)) -> return aktueltBehov
+        uløstBehovIndex == 0 || (forrigeBehov != null && løsninger.hasNonNull(forrigeBehov)) -> return uløstBehov
         // Venter på andre behov
         else -> {
             behovsrekkefølge.forEach {
-                if (it == aktueltBehov) return null
+                if (it == uløstBehov) return null
                 requireKey("$Løsninger.$it")
             }
         }

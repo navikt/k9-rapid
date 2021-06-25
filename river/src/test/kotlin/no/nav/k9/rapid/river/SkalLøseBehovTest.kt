@@ -65,7 +65,7 @@ internal class SkalLøseBehovTest {
         river.onMessage(message, VoidMesageContext.Instance)
         val (sisteUtfall, error) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Error, sisteUtfall)
-        assertTrue(error.contains("@løsninger.$TestBehov") && error.contains("Behov allerede løst."))
+        assertTrue(error.contains("@løsninger.$TestBehov") && error.contains("Alle matchende behov allerede løst."))
     }
 
     @Test
@@ -97,6 +97,34 @@ internal class SkalLøseBehovTest {
 
         val message = behovssekvens.somJsonMessage().also {
             it.leggTilLøsning("Foo", mapOf("løsning" to true))
+        }.also { assertEquals(TestBehovMedSuffix, it.aktueltBehov()) }.toJson()
+        river.onMessage(message, VoidMesageContext.Instance)
+        val (sisteUtfall, _) = sisteUtfallPacketListener.sistUtfall()
+        assertEquals(SisteUtfallPacketListener.Utfall.Packet, sisteUtfall)
+    }
+
+    @Test
+    fun `Skal løse behov med suffix hvor samme behov finnes allerede`() {
+        val TestBehovMedSuffix = "TestBehov@journalføring"
+        val sisteUtfallPacketListener = SisteUtfallPacketListener()
+        val behovssekvens = Behovssekvens(
+            id = ULID().nextULID(),
+            correlationId = UUID.randomUUID().toString(),
+            behov = arrayOf(
+                Behov(navn = "Foo"),
+                Behov(navn = TestBehov),
+                Behov(navn = TestBehovMedSuffix)
+            )
+        )
+
+        val river = River(VoidRapidsConnection.Instance).apply {
+            register(sisteUtfallPacketListener)
+            validate { it.skalLøseBehov(TestBehov) }
+        }
+
+        val message = behovssekvens.somJsonMessage().also {
+            it.leggTilLøsning("Foo", mapOf("løsning" to true))
+            it.leggTilLøsning(TestBehov, mapOf("løsning" to true))
         }.also { assertEquals(TestBehovMedSuffix, it.aktueltBehov()) }.toJson()
         river.onMessage(message, VoidMesageContext.Instance)
         val (sisteUtfall, _) = sisteUtfallPacketListener.sistUtfall()
