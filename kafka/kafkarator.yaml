@@ -45,4 +45,6 @@ spec:
     - team: omsorgspenger
       application: k9-vaktmesterassistent
       access: write
-
+    - team: k9saksbehandling
+      application: k9-sak
+      access: write
