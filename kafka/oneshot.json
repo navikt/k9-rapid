@@ -9,12 +9,8 @@
       "members": [
         {"member": "A158227", "role": "MANAGER"},
         {"member": "F154868", "role": "MANAGER"},
-        {"member": "srvk9punsj", "role": "PRODUCER"}, 
-        {"member": "srvomsover-prs", "role": "PRODUCER"},
         {"member": "srv-k9-vaktmester", "role": "PRODUCER"},
-        {"member": "srv-k9-vaktmester", "role": "CONSUMER"},
-        {"member": "srv-oms-alene-prs", "role": "PRODUCER"},
-        {"member": "srv-omd-melding-prs", "role": "PRODUCER"},
+        {"member": "srv-k9-vaktmester", "role": "CONSUMER"}
         {"member": "srvk9sak", "role": "PRODUCER"}
       ],
       "numPartitions": 6
