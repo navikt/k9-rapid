@@ -32,12 +32,11 @@ jobs:
           TAG_NAME="1.$(date "+%Y%m%d%H%M%S")-$(git rev-parse --short HEAD)"
           echo "RELEASE_TAG=$TAG_NAME" >> $GITHUB_ENV
       - name: Set changelog
+        id: changelog
+        # (Escape newlines see https://github.com/actions/create-release/issues/25)
         run: |
           text="$(git --no-pager log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s")"
-          text="${text//$'%'/%25}"
-          text="${text//$'\n'/%0A}"
-          text="${text//$'\r'/%0D}"
-          echo "CHANGELOG=$text" >> $GITHUB_ENV
+          echo "::set-output name=CHANGELOG::$text"
       - name: Publish packages
         run: ./gradlew -Pversion=$RELEASE_TAG build publish
         env:
@@ -52,7 +51,8 @@ jobs:
           tag_name: ${{ env.RELEASE_TAG }}
           release_name: ${{ env.RELEASE_TAG }}
           body: |
-            Changes in this Release
-            ${{ env.CHANGELOG }}
+            Changes in this release
+
+            ${{ steps.changelog.outputs.CHANGELOG }}
           draft: false
           prerelease: false
