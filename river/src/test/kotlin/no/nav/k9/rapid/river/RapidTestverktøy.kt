@@ -5,6 +5,10 @@ import no.nav.helse.rapids_rivers.*
 internal class VoidMesageContext private constructor(): MessageContext {
     override fun publish(message: String) {}
     override fun publish(key: String, message: String) {}
+    override fun rapidName(): String {
+        return this.toString()
+    }
+
     internal companion object {
         val Instance = VoidMesageContext()
     }
@@ -13,6 +17,10 @@ internal class VoidMesageContext private constructor(): MessageContext {
 internal class VoidRapidsConnection private constructor(): RapidsConnection() {
     override fun publish(message: String) {}
     override fun publish(key: String, message: String) {}
+    override fun rapidName(): String {
+        return this.toString()
+    }
+
     override fun start() {}
     override fun stop() {}
     internal companion object {

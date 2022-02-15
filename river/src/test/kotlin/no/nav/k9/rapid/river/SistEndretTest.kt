@@ -43,6 +43,11 @@ internal class SistEndretTest {
             override fun publish(key: String, message: String) {
                 this.message = message
             }
+
+            override fun rapidName(): String {
+                return this.toString()
+            }
+
             fun jsonMessage() = JsonMessage(message!!, MessageProblems(message!!)).also { it.interestedIn("@sistEndret") }
         }
 
