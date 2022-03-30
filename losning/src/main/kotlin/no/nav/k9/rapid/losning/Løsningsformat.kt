@@ -12,7 +12,7 @@ internal object Løsningsformat {
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
-    internal const val Id = "@id"
+    internal const val Id = "@behovId"
     const val Løsninger = "@løsninger"
 }
 
