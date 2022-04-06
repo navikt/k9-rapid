@@ -1,4 +1,4 @@
-val rapidsAndRiversVersion = "2022.03.30-21.22.dbaa41649bd3"
+val rapidsAndRiversVersion = "2022.04.05-09.40.11a466d7ac70"
 
 plugins {
     id("java")
