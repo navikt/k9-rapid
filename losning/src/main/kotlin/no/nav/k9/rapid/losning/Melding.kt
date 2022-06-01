@@ -6,9 +6,13 @@ import org.jetbrains.annotations.TestOnly
 
 data class Melding internal constructor(private val rawJson: String) {
     private val json = Løsningsformat.jacksonObjectMapper.readTree(rawJson)
-    private val id = try {
-        ULID.parseULID(json.get(Løsningsformat.Id).asText())
-    } catch (ignore: Throwable) { null }
+    private val id = when (json.hasNonNull("@behovssekvensId")) {
+        true -> json.get("@behovssekvensId").asText()
+        false -> json.get("@id").asText()
+    }.let { behovssekvensId -> try {
+        ULID.parseULID(behovssekvensId)
+    } catch (ignore: Throwable) { null }}
+
     private val løsninger = json.get(Løsningsformat.Løsninger)
 
     fun harLøsningPå(behov: String) : Boolean {

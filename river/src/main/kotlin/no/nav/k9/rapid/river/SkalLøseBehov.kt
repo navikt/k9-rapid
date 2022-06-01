@@ -10,26 +10,28 @@ import no.nav.k9.rapid.behov.Behovssekvens
 
 internal const val Løst = "løst"
 internal const val Løsninger = "@løsninger"
-private val StøttetTypeOgVersjon = Pair(
-        TextNode(Behovsformat.BehovssekvensType), TextNode(Behovsformat.BehovssekvensVersjon)
-)
+private val StøttetTypeOgVersjon = TextNode(Behovsformat.BehovssekvensType) to TextNode(Behovsformat.BehovssekvensVersjon)
 
 internal fun erBehovssekvens(jsonMessage: JsonMessage) : Boolean {
     jsonMessage.interestedIn(Behovsformat.Type, Behovsformat.Versjon)
-    val typeOgVersjon = Pair(
-            jsonMessage[Behovsformat.Type], jsonMessage[Behovsformat.Versjon]
-    )
+    val typeOgVersjon = jsonMessage[Behovsformat.Type] to jsonMessage[Behovsformat.Versjon]
 
-    return if (typeOgVersjon == StøttetTypeOgVersjon) {
-        Behovssekvens.demandedKeys.forEach { jsonMessage.demandKey(it) }
-        Behovssekvens.demandedValues.forEach { (key, value) -> jsonMessage.demandValue(key, value)}
-        jsonMessage.interestedIn(Løsninger, Behovsformat.SistEndret)
-        true
-    } else {
+    if (typeOgVersjon != StøttetTypeOgVersjon) {
         jsonMessage.requireValue(Behovsformat.Type, StøttetTypeOgVersjon.first.asText())
-        jsonMessage.requireValue(Behovsformat.Versjon, StøttetTypeOgVersjon.first.asText())
-        false
+        jsonMessage.requireValue(Behovsformat.Versjon, StøttetTypeOgVersjon.second.asText())
+        return false
     }
+
+    jsonMessage.interestedIn(Behovsformat.Id, Behovsformat.BehovssekvensId)
+    val behovssekvensResult = runCatching { jsonMessage.behovssekvensId() }
+    if (behovssekvensResult.isFailure) {
+        jsonMessage.require(Behovsformat.BehovssekvensId) { behovssekvensResult.getOrThrow() }
+        return false
+    }
+
+    Behovssekvens.demandedKeys.forEach { jsonMessage.demandKey(it) }
+    jsonMessage.interestedIn(Løsninger, Behovsformat.SistEndret)
+    return true
 }
 
 private fun String.erMatchendeBehov(behov: String) =

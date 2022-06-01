@@ -16,7 +16,7 @@ class Behovssekvens(
     @Language("json")
     private val rawJson = """
     {
-      "${Behovsformat.Id}": "$id",
+      "${Behovsformat.BehovssekvensId}": "$id",
       "${Behovsformat.Type}": "${Behovsformat.BehovssekvensType}",
       "${Behovsformat.Versjon}": "${Behovsformat.BehovssekvensVersjon}",
       "${Behovsformat.Opprettet}" : "${opprettet.iso8601()}",
@@ -57,15 +57,10 @@ class Behovssekvens(
         private fun String.validerId() = ULID.parseULID(this)
 
         val demandedKeys = listOf(
-                Behovsformat.Id,
-                Behovsformat.CorrelationId,
-                Behovsformat.Behovsrekkefølge,
-                Behovsformat.Behov,
-                Behovsformat.Opprettet
-        )
-        val demandedValues = mapOf(
-                Behovsformat.Type to Behovsformat.BehovssekvensType,
-                Behovsformat.Versjon to Behovsformat.BehovssekvensVersjon
+            Behovsformat.CorrelationId,
+            Behovsformat.Behovsrekkefølge,
+            Behovsformat.Behov,
+            Behovsformat.Opprettet
         )
     }
 
