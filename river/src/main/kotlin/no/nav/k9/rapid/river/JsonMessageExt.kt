@@ -13,7 +13,7 @@ internal fun JsonMessage.getString(key: String) = get(key).also {
 
 private fun JsonMessage.getStringOrNull(key: String) = get(key).takeIf { it is TextNode }?.asText()
 
-internal fun JsonMessage.behovssekvensId() = (getStringOrNull(Behovsformat.BehovssekvensId) ?: getString(Behovsformat.Id)).also {
+fun JsonMessage.behovssekvensId() = (getStringOrNull(Behovsformat.BehovssekvensId) ?: getString(Behovsformat.Id)).also {
     ULID.parseULID(it)
 }
 internal fun JsonMessage.correlationId() = getString(Behovsformat.CorrelationId)
