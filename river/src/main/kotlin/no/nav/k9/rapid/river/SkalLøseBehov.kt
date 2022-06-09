@@ -22,7 +22,7 @@ internal fun erBehovssekvens(jsonMessage: JsonMessage) : Boolean {
         return false
     }
 
-    jsonMessage.interestedIn(Behovsformat.Id, Behovsformat.BehovssekvensId)
+    jsonMessage.interestedIn(Behovsformat.BehovssekvensId)
     val behovssekvensResult = runCatching { jsonMessage.behovssekvensId() }
     if (behovssekvensResult.isFailure) {
         jsonMessage.require(Behovsformat.BehovssekvensId) { behovssekvensResult.getOrThrow() }

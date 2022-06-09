@@ -14,7 +14,6 @@ object Behovsformat {
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
 
-    const val Id = "@id"
     const val BehovssekvensId = "@behovssekvensId"
     const val CorrelationId = "@correlationId"
     const val Behovsrekkefølge = "@behovsrekkefølge"
