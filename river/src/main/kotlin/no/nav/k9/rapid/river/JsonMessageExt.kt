@@ -11,8 +11,6 @@ internal fun JsonMessage.getString(key: String) = get(key).also {
     if (it !is TextNode) throw IllegalStateException("$key må være String")
 }.let { requireNotNull(it.asText()) }
 
-private fun JsonMessage.getStringOrNull(key: String) = get(key).takeIf { it is TextNode }?.asText()
-
 fun JsonMessage.behovssekvensId() = getString(Behovsformat.BehovssekvensId).also {
     ULID.parseULID(it)
 }

@@ -32,7 +32,7 @@ internal class SistEndretTest {
             )
         ).somJsonMessage()
 
-        val opprettet = jsonMessage["@opprettet"].asZonedDateTime()
+        val opprettet = jsonMessage["@behovOpprettet"].asZonedDateTime()
         val sistEndret = jsonMessage["@sistEndret"].asZonedDateTime()
         assertNotNull(opprettet)
         assertEquals(opprettet, sistEndret)
