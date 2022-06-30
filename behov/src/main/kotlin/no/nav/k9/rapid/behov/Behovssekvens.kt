@@ -19,6 +19,7 @@ class Behovssekvens(
       "${Behovsformat.BehovssekvensId}": "$id",
       "${Behovsformat.Type}": "${Behovsformat.BehovssekvensType}",
       "${Behovsformat.Versjon}": "${Behovsformat.BehovssekvensVersjon}",
+      "${Behovsformat.Opprettet}" : "${opprettet.iso8601()}",
       "${Behovsformat.BehovOpprettet}" : "${opprettet.iso8601()}",
       "${Behovsformat.SistEndret}" : "${opprettet.iso8601()}",
       "${Behovsformat.CorrelationId}": "$correlationId",
