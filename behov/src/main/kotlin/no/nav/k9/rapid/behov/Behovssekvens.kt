@@ -20,6 +20,7 @@ class Behovssekvens(
       "${Behovsformat.Type}": "${Behovsformat.BehovssekvensType}",
       "${Behovsformat.Versjon}": "${Behovsformat.BehovssekvensVersjon}",
       "${Behovsformat.Opprettet}" : "${opprettet.iso8601()}",
+      "${Behovsformat.BehovOpprettet}" : "${opprettet.iso8601()}",
       "${Behovsformat.SistEndret}" : "${opprettet.iso8601()}",
       "${Behovsformat.CorrelationId}": "$correlationId",
       "${Behovsformat.Behovsrekkefølge}": [],
@@ -60,7 +61,7 @@ class Behovssekvens(
             Behovsformat.CorrelationId,
             Behovsformat.Behovsrekkefølge,
             Behovsformat.Behov,
-            Behovsformat.Opprettet
+            //Behovsformat.BehovOpprettet // TODO: Legges tilbake etter migrering
         )
     }
 
