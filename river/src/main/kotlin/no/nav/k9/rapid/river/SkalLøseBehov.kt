@@ -30,7 +30,7 @@ internal fun erBehovssekvens(jsonMessage: JsonMessage) : Boolean {
     }
 
     Behovssekvens.demandedKeys.forEach { jsonMessage.demandKey(it) }
-    jsonMessage.interestedIn(Løsninger, Behovsformat.SistEndret, Behovsformat.BehovOpprettet, Behovsformat.Opprettet)
+    jsonMessage.interestedIn(Løsninger, Behovsformat.SistEndret)
     return true
 }
 
