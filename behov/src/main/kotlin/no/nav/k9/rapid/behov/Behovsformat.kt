@@ -18,8 +18,7 @@ object Behovsformat {
     const val CorrelationId = "@correlationId"
     const val Behovsrekkefølge = "@behovsrekkefølge"
     const val Behov = "@behov"
-    const val Opprettet = "@opprettet" // TODO: Fjernes etter migrering
-    const val BehovOpprettet = "@behovOpprettet" // TODO: Settes til internal etter migrering
+    internal const val BehovOpprettet = "@behovOpprettet"
 
     const val Type = "@type"
     const val Versjon = "@versjon"
