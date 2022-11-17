@@ -6,7 +6,7 @@ val jacksonVersion = "2.14.0"
 val ulidVersion = "8.3.0"
 
 plugins {
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version "1.7.21"
 }
 
 repositories {
