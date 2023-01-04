@@ -18,9 +18,6 @@ spec:
     - team: omsorgspenger
       application: k9-vaktmester
       access: readwrite
-    - team: dusseldorf
-      application: omsorgsdager-melding-prosessering
-      access: write
     - team: omsorgspenger
       application: k9-punsjbolle
       access: readwrite
