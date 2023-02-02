@@ -19,10 +19,11 @@ spec:
       description: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
       action: "`kubectl describe pod {{ $labels.deployment }} -n {{ $labels.namespace }}`"
 
-    - alert: høy feilrate i logger
-      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"k9.*|omsorgspenger.*", log_namespace="omsorgspenger",log_level="Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"k9.*|omsorgspenger.*", log_namespace="omsorgspenger"}[3m]))) > 5
-      for: 3m
-      action: "Sjekk loggene til appen med `kubectl logs {{ $labels.log_pod_name }} -c {{ $labels.log_app }} -n {{ $labels.log_namespace }}` for å se hvorfor det er så mye feili"
+# Håndteres bedre av uloest behov fra k9-vaktmester, feilrate gir mye støy vid f.eks. nettverkshicke fss<->gcp
+#    - alert: høy feilrate i logger
+#      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"k9.*|omsorgspenger.*", log_namespace="omsorgspenger",log_level="Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app=~"k9.*|omsorgspenger.*", log_namespace="omsorgspenger"}[3m]))) > 5
+#      for: 3m
+#      action: "Sjekk loggene til appen med `kubectl logs {{ $labels.log_pod_name }} -c {{ $labels.log_app }} -n {{ $labels.log_namespace }}` for å se hvorfor det er så mye feili"
 
     - alert: kontinuerlig restart
       expr: sum(increase(kube_pod_container_status_restarts_total{container=~"k9.*|omsorgspenger.*", namespace="omsorgspenger"}[30m])) by (container, pod, namespace) > 5
