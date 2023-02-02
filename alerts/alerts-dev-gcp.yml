@@ -6,8 +6,6 @@ metadata:
   labels:
     team: omsorgspenger
 spec:
-  route:
-    repeatInterval: 24h
   receivers: # receivers for all alerts below
     slack:
       channel: '#omsorgspenger-alerts'
