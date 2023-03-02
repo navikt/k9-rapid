@@ -23,7 +23,11 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
   - Oppretter saksnummer & lagrer i database
   - Rest-api som sjekker om saksbehandler har tilgang til saksnummer
 
-- **omsorgspenger-rammemeldinger**
+- **omsorgspenger-rammemeldinger** [
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-rammemeldinger&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-rammemeldinger)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-rammemeldinger&metric=ncloc)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-rammemeldinger)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-rammemeldinger&metric=duplicated_lines_density)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-rammemeldinger)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-rammemeldinger&metric=coverage)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-rammemeldinger) ]
   - Håndterer behandling og lagring av rammemeldinger som er flyttet ut av Infotrygd, samt sammenstille nye rammemeldinger med det som allerede finnes i Infotrygd. 
 
 - **omsorgsdager**
