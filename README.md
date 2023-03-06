@@ -10,7 +10,11 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
   - Håndtering av meldinger som ikke er løst. F.eks. republisering, legge til eller ignorere ulike behov.
   - Lagrer grunnlag for behandling på norsk jord
 
-- **k9-personopplysninger**
+- **k9-personopplysninger** [
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-personopplysninger&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=navikt_k9-personopplysninger)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-personopplysninger&metric=ncloc)](https://sonarcloud.io/summary/overall?id=navikt_k9-personopplysninger)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-personopplysninger&metric=duplicated_lines_density)](https://sonarcloud.io/summary/overall?id=navikt_k9-personopplysninger)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-personopplysninger&metric=coverage)](https://sonarcloud.io/summary/overall?id=navikt_k9-personopplysninger) ]
   - Løser behov for identitetsnummer, gradering & familierelasjoner fra PDL
 
 - **omsorgspenger-journalforing**
