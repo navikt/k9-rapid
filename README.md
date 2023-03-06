@@ -6,7 +6,11 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
 
 ### Rapids-and-rivers applikasjoner i k9-rapid
 
-- **k9-vaktmester**
+- **k9-vaktmester** [
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-vaktmester&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=navikt_k9-vaktmester)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-vaktmester&metric=ncloc)](https://sonarcloud.io/summary/overall?id=navikt_k9-vaktmester)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-vaktmester&metric=duplicated_lines_density)](https://sonarcloud.io/summary/overall?id=navikt_k9-vaktmester)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-vaktmester&metric=coverage)](https://sonarcloud.io/summary/overall?id=navikt_k9-vaktmester) ]
   - Håndtering av meldinger som ikke er løst. F.eks. republisering, legge til eller ignorere ulike behov.
   - Lagrer grunnlag for behandling på norsk jord
 
