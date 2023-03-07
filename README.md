@@ -21,7 +21,11 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-personopplysninger&metric=coverage)](https://sonarcloud.io/summary/overall?id=navikt_k9-personopplysninger) ]
   - Løser behov for identitetsnummer, gradering & familierelasjoner fra PDL
 
-- **omsorgspenger-journalforing**
+- **omsorgspenger-journalforing** [
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-journalforing&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-journalforing)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-journalforing&metric=ncloc)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-journalforing)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-journalforing&metric=duplicated_lines_density)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-journalforing)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-journalforing&metric=coverage)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-journalforing) ]
   - Håndtering av oppgaver & journalposter
   - Oppretter gosys-oppgaver, oppdaterer & ferdigstiller journalposter
   - Genererer & journalfør json-payloads i pdf-format
