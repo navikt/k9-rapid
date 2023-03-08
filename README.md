@@ -47,6 +47,12 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
   - Håndterer behandling og lagring av rammemeldinger som er flyttet ut av Infotrygd, samt sammenstille nye rammemeldinger med det som allerede finnes i Infotrygd. 
 
 - **omsorgsdager**
+  - [
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgsdager&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=navikt_omsorgsdager)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgsdager&metric=ncloc)](https://sonarcloud.io/summary/overall?id=navikt_omsorgsdager)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgsdager&metric=duplicated_lines_density)](https://sonarcloud.io/summary/overall?id=navikt_omsorgsdager)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgsdager&metric=coverage)](https://sonarcloud.io/summary/overall?id=navikt_omsorgsdager)
+ ] 
   - Håndtering av nye rammevedtak (kronisk syk, midlertidig alene, alene omsorg) som opprettes i k9-sak & brukes for beregning av kvote i k9-aarskvantum.
 
 ### Andre applikasjoner som kun sender meldinger in på rapiden
