@@ -35,6 +35,12 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
   - Kopierer ferdigstilte journalposter & knytter til riktig sak.
 
 - **omsorgspenger-sak**
+  - [
+  [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-sak&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-sak)
+  [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-sak&metric=ncloc)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-sak)
+  [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-sak&metric=duplicated_lines_density)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-sak)
+  [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-sak&metric=coverage)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-sak)
+  ]
   - Oppretter saksnummer & lagrer i database
   - Rest-api som sjekker om saksbehandler har tilgang til saksnummer
 
