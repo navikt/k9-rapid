@@ -43,4 +43,4 @@ jobs:
         uses: advanced-security/maven-dependency-submission-action@72bdd87d620be905d2add3aa48214250a1921eb3
         with:
           settings-file: m2-settings.xml
-          maven-args: -DskipTests --also-make-dependents --debug --threads 1
+          maven-args: -DskipTests
