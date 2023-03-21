@@ -1,5 +1,4 @@
 name: Deploy alerts to NAIS
-
 on:
   push:
     paths:
@@ -21,4 +20,4 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: ${{ matrix.cluster }}
-          RESOURCE: alerts/alerts-${{ matrix.cluster }}.yml
+          RESOURCE: alerts/alerts.yml
