@@ -17,7 +17,6 @@ spec:
             action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
             summary: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
           labels:
-            namespace: {{namespace}}
             severity: critical
 
         - alert: kontinuerlig restart
@@ -28,7 +27,6 @@ spec:
             action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
             summary: "App {{ $labels.deployment }} restarter i namespace {{ $labels.namespace }}"
           labels:
-            namespace: {{namespace}}
             severity: warning
 
         - alert: uloeste behov i rapid
@@ -38,5 +36,4 @@ spec:
             consequence: Søknader som sitter fast
             action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
           labels:
-            namespace: {{namespace}}
             severity: critical
