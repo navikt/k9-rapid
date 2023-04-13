@@ -9,31 +9,35 @@ spec:
   groups:
     - name: k9-rapids-alerts
       rules:
-        - alert: applikasjon nede
-          expr: kube_deployment_status_replicas_available{deployment=~"k9.*|omsorgspenger.*", namespace="omsorgspenger"} == 0
-          for: 5m
-          annotations:
-            consequence: Applikasjon nede
-            action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
-            summary: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
-          labels:
-            severity: critical
+      - alert: applikasjon nede
+        expr: kube_deployment_status_replicas_available{deployment=~"k9.*|omsorgspenger.*", namespace="omsorgspenger"} == 0
+        for: 5m
+        annotations:
+          consequence: Applikasjon nede
+          action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
+          summary: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
+        labels:
+          namespace: omsorgspenger
+          severity: critical
 
-        - alert: kontinuerlig restart
-          expr: sum(increase(kube_pod_container_status_restarts_total{container=~"k9.*|omsorgspenger.*", namespace="omsorgspenger"}[30m])) by (container, pod, namespace) > 5
-          for: 5m
-          annotations:
-            consequence: Problem som må undersøkes
-            action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
-            summary: "App {{ $labels.deployment }} restarter i namespace {{ $labels.namespace }}"
-          labels:
-            severity: warning
+      - alert: kontinuerlig restart
+        expr: sum(increase(kube_pod_container_status_restarts_total{container=~"k9.*|omsorgspenger.*", namespace="omsorgspenger"}[30m])) by (container, pod, namespace) > 5
+        for: 5m
+        annotations:
+          consequence: Problem som må undersøkes
+          action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
+          summary: "App {{ $labels.deployment }} restarter i namespace {{ $labels.namespace }}"
+        labels:
+          namespace: omsorgspenger
+          severity: warning
 
-        - alert: uloeste behov i rapid
-          expr: sum(uloesteBehov{app="k9-vaktmester", paaVent="false"}) > 0
-          for: 60m
-          annotations:
-            consequence: Søknader som sitter fast
-            action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
-          labels:
-            severity: critical
+      - alert: uloeste behov i rapid
+        expr: sum(uloesteBehov{app="k9-vaktmester", paaVent="false"}) > 0
+        for: 60m
+        annotations:
+          consequence: Søknader som sitter fast
+          action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
+          summary: "Uloeste behov i k9-rapiden"
+        labels:
+          namespace: omsorgspenger
+          severity: critical
