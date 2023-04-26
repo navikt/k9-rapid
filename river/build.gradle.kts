@@ -12,6 +12,7 @@ dependencies {
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
