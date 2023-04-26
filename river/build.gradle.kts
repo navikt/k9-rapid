@@ -1,4 +1,4 @@
-val rapidsAndRiversVersion = "2023041310341681374880.67ced5ad4dda"
+val rapidsAndRiversVersion = "2023042611061682500003.f24c0756e00a"
 
 plugins {
     id("java")
@@ -11,9 +11,7 @@ dependencies {
 }
 
 repositories {
-    maven {
-        url = uri("https://jitpack.io")
-    }
+    mavenCentral()
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
