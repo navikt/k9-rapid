@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter.ofPattern
 
@@ -29,7 +30,7 @@ object Behovsformat {
     val BehovssekvensVersjon = "1"
 
     private val ISO8601 = ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")
-    private val UTC = ZoneId.of("UTC")
+    private val UTC = ZoneOffset.UTC
 
     fun nå() = ZonedDateTime.now(UTC)
     fun ZonedDateTime.iso8601() = ISO8601.format(this)
