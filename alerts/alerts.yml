@@ -34,7 +34,7 @@ spec:
       - alert: uloeste behov i rapid
         expr: sum(uloesteBehov{app="k9-vaktmester", paaVent="false"}) > 0
         for: 60m
-        repeat_interval: 24h
+        repeatInterval: 24h
         annotations:
           consequence: Søknader som sitter fast
           action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
