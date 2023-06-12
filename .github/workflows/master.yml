@@ -27,8 +27,6 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: gradle
-      - name: Dependency submission
-        uses: navikt/sif-gha-workflows/.github/workflows/gradle-dependency-submission.yml@main
       - name: Set release tag
         run: |
           TAG_NAME="1.$(date "+%Y%m%d%H%M%S")-$(git rev-parse --short HEAD)"
