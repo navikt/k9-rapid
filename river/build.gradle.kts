@@ -12,6 +12,7 @@ dependencies {
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -28,7 +29,6 @@ publishing {
                 password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
             }
         }
-        maven("https://jitpack.io")
     }
     publications {
         create<MavenPublication>("mavenJava") {
