@@ -5,7 +5,7 @@ on:
     paths-ignore:
       - '**.md'
       - '.gitignore'
-      - 'LICENCE'
+      - 'LICENSE'
       - 'CODEOWNERS'
       - 'kafka/*'
       - 'alerts/*'
@@ -32,11 +32,9 @@ jobs:
           TAG_NAME="1.$(date "+%Y%m%d%H%M%S")-$(git rev-parse --short HEAD)"
           echo "RELEASE_TAG=$TAG_NAME" >> $GITHUB_ENV
       - name: Set changelog
-        id: changelog
-        # (Escape newlines see https://github.com/actions/create-release/issues/25)
-        run: |
-          text="$(git --no-pager log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s")"
-          echo "::set-output name=CHANGELOG::$text"
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@bc4eb56105a55315b8cf53cfed7e23b9c1c71278
+
       - name: Publish packages
         run: ./gradlew -Pversion=$RELEASE_TAG build publish
         env:
@@ -53,6 +51,6 @@ jobs:
           body: |
             Changes in this release
 
-            ${{ steps.changelog.outputs.CHANGELOG }}
+            ${{steps.build_changelog.outputs.changelog}}
           draft: false
           prerelease: false
