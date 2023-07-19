@@ -10,11 +10,17 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-    open-pull-requests-limit: 10
+    groups:
+      github-actions:
+        patterns:
+          - "*"
   - package-ecosystem: gradle
     directory: "/"
     schedule:
       interval: daily
-    open-pull-requests-limit: 10
+    groups:
+      gradle:
+        patterns:
+          - "*"
     registries:
       - k9-rapid
