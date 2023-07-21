@@ -33,29 +33,16 @@ jobs:
           cache: gradle
       - name: Set release tag
         run: |
-          TAG_NAME="1.$(date "+%Y%m%d%H%M%S")-$(git rev-parse --short HEAD)"
+          TAG_NAME="1.$(date "+%Y%m%d-%H%M%S")-$(git rev-parse --short HEAD)"
           echo "RELEASE_TAG=$TAG_NAME" >> $GITHUB_ENV
-      - name: Set changelog
-        run: |
-          text="$(git --no-pager log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s")"
-          echo "CHANGELOG=$text" >> $GITHUB_ENV
 
       - name: Publish packages
         run: ./gradlew -Pversion=$RELEASE_TAG build publish
         env:
           GITHUB_USERNAME: x-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.RELEASE_TAG }}
-          release_name: ${{ env.RELEASE_TAG }}
-          body: |
-            Changes in this release
 
-            ${{ env.CHANGELOG }}
-          draft: false
-          prerelease: false
+      - uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.RELEASE_TAG }}
+          generateReleaseNotes: true
