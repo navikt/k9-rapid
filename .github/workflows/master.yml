@@ -36,7 +36,9 @@ jobs:
           TAG_NAME="1.$(date "+%Y%m%d%H%M%S")-$(git rev-parse --short HEAD)"
           echo "RELEASE_TAG=$TAG_NAME" >> $GITHUB_ENV
       - name: Set changelog
-        run: echo "CHANGELOG=$(git --no-pager log $(git describe --tags --abbrev=0)..HEAD --pretty=format:'%h %s')" >> $GITHUB_ENV
+        run: |
+          text="$(git --no-pager log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s")"
+          echo "CHANGELOG=$text" >> $GITHUB_ENV
 
       - name: Publish packages
         run: ./gradlew -Pversion=$RELEASE_TAG build publish
