@@ -32,7 +32,7 @@ jobs:
           cache: gradle
       - name: Set release tag
         run: |
-          TAG_NAME="1.$(date "+%Y%m%d-%H%M%S")-$(git rev-parse --short HEAD)"
+          TAG_NAME="1.$(date "+%Y%m%d%H%M%S")-$(git rev-parse --short HEAD)"
           echo "RELEASE_TAG=$TAG_NAME" >> $GITHUB_ENV
 
       - name: Publish packages
