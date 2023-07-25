@@ -1,10 +1,12 @@
 name: Fetch semver
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
   prepare:
-    name: Preparing build context
     runs-on: ubuntu-latest
     outputs:
       RELEASE_VERSION: ${{ steps.semver.outputs.semantic_version }}
