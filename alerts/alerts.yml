@@ -15,7 +15,7 @@ spec:
         annotations:
           consequence: Applikasjon nede
           action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
-          summary: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
+          summary: "App {{ $labels.pod }} er nede i namespace {{ $labels.namespace }}"
         labels:
           namespace: omsorgspenger
           severity: critical
@@ -26,7 +26,7 @@ spec:
         annotations:
           consequence: Problem som må undersøkes
           action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
-          summary: "App {{ $labels.deployment }} restarter i namespace {{ $labels.namespace }}"
+          summary: "App {{ $labels.pod }} restarter i namespace {{ $labels.namespace }}"
         labels:
           namespace: omsorgspenger
           severity: warning
