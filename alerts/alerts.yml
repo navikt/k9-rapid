@@ -31,13 +31,13 @@ spec:
           namespace: omsorgspenger
           severity: warning
 
-#      - alert: uloeste behov i rapid
-#        expr: sum(uloesteBehov{app="k9-vaktmester", paaVent="false"}) > 0
-#        for: 60m
-#        annotations:
-#          consequence: Søknader som sitter fast
-#          action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
-#          summary: "Uloeste behov i k9-rapiden"
-#        labels:
-#          namespace: omsorgspenger
-#          severity: critical
+      - alert: uloeste behov i rapid
+        expr: sum(uloesteBehov{app="k9-vaktmester", paaVent="false"}) > 0
+        for: 60m
+        annotations:
+          consequence: Søknader som sitter fast
+          action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
+          summary: "Uloeste behov i k9-rapiden"
+        labels:
+          namespace: omsorgspenger
+          severity: critical
