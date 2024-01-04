@@ -10,17 +10,9 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-    groups:
-      github-actions:
-        patterns:
-          - "*"
   - package-ecosystem: gradle
     directory: "/"
     schedule:
       interval: daily
-    groups:
-      gradle:
-        patterns:
-          - "*"
     registries:
       - k9-rapid
