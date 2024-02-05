@@ -1,7 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val junitJupiterVersion = "5.10.1"
+val junitJupiterVersion = "5.10.2"
 val jacksonVersion = "2.16.1"
 val ulidVersion = "8.3.0"
 
