@@ -6,7 +6,7 @@ val jacksonVersion = "2.16.1"
 val ulidVersion = "8.3.0"
 
 plugins {
-    kotlin("jvm") version "1.9.22"
+    kotlin("jvm") version "1.9.23"
 }
 
 repositories {
@@ -40,7 +40,7 @@ subprojects {
     }
 
     tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "21"
     }
 
     tasks.withType<Test> {
