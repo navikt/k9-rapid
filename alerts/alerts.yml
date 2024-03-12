@@ -25,7 +25,7 @@ spec:
         for: 5m
         annotations:
           consequence: Problem som må undersøkes
-          action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
+          action: "`kubectl describe pod {{ $labels.pod }}` -> `kubectl logs {{ $labels.pod }}`"
           summary: "App {{ $labels.pod }} restarter i namespace {{ $labels.namespace }}"
         labels:
           namespace: omsorgspenger
@@ -36,8 +36,8 @@ spec:
         for: 60m
         annotations:
           consequence: Søknader som sitter fast
-          action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
-          summary: "Uloeste behov i k9-rapiden"
+          action: "Filtrere på level: error i kibana for å se vad som feiler."
+          summary: "Uloeste behov i k9-rapiden har blitt republisert av k9-vaktmester i >60m. Republisering skjer kun i arbeidstid."
         labels:
           namespace: omsorgspenger
           severity: critical
