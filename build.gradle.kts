@@ -1,11 +1,12 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 val junitJupiterVersion = "5.10.1"
-val jacksonVersion = "2.16.1"
+val jacksonVersion = "2.17.1"
 val ulidVersion = "8.3.0"
 
 plugins {
-    kotlin("jvm") version "1.9.23"
+
+    kotlin("jvm") version "1.9.24"
 }
 
 repositories {
@@ -22,6 +23,14 @@ subprojects {
 
     repositories {
         mavenCentral()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/navikt/rapids-and-rivers")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: "x-access-token"
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 
     dependencies {
