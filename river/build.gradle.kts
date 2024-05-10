@@ -1,5 +1,6 @@
 val rapidsAndRiversVersion = "2024041714471713358051.71746f05c18e"
 
+
 plugins {
     id("java")
     id("maven-publish")
