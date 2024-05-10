@@ -11,6 +11,8 @@ jobs:
   deploy-to-dev-and-prod:
     name: Deploy to ${{ matrix.cluster }}
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     strategy:
       matrix:
         cluster: [dev-fss, dev-gcp, prod-fss, prod-gcp]
