@@ -1,6 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
-val junitJupiterVersion = "5.10.1"
+val junitJupiterVersion = "5.10.3"
 val jacksonVersion = "2.17.1"
 val ulidVersion = "8.3.0"
 
