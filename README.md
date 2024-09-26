@@ -62,8 +62,6 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
   - Håndtering av nye rammevedtak (kronisk syk, midlertidig alene, alene omsorg) som opprettes i k9-sak & brukes for beregning av kvote i k9-aarskvantum.
 
 ### Andre applikasjoner som kun sender meldinger in på rapiden
-- **k9-punsjbolle**
-- **k9-punsj**
 - **k9-sak**
 - **omsorgsdager-melding-prosessering**
 
