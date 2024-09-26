@@ -19,12 +19,6 @@ spec:
       application: k9-vaktmester
       access: readwrite
     - team: omsorgspenger
-      application: k9-punsjbolle
-      access: readwrite
-    - team: k9saksbehandling
-      application: k9-punsj
-      access: write
-    - team: omsorgspenger
       application: k9-personopplysninger
       access: readwrite
     - team: omsorgspenger
