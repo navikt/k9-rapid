@@ -8,14 +8,14 @@ on:
       - master
 
 jobs:
-  deploy-to-dev-and-prod:
+  deploy-to-prod:
     name: Deploy to ${{ matrix.cluster }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
     strategy:
       matrix:
-        cluster: [dev-fss, dev-gcp, prod-fss, prod-gcp]
+        cluster: [prod-fss, prod-gcp]
     steps:
       - uses: actions/checkout@v4
       - uses: nais/deploy/actions/deploy@v2
