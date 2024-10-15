@@ -36,7 +36,7 @@ spec:
         for: 60m
         annotations:
           consequence: Søknader som sitter fast
-          action: "Filtrere på level: error i kibana for å se vad som feiler."
+          action: "Filtrere på level: error i kibana for å se hva som feiler."
           summary: "Uloeste behov i k9-rapiden har blitt republisert av k9-vaktmester i >60m. Republisering skjer kun i arbeidstid."
         labels:
           namespace: omsorgspenger
