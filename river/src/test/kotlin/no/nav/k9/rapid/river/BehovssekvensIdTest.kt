@@ -1,8 +1,9 @@
 package no.nav.k9.rapid.river
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.nav.helse.rapids_rivers.JsonMessage
-import no.nav.helse.rapids_rivers.MessageProblems
+import com.github.navikt.tbd_libs.rapids_and_rivers.JsonMessage
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageProblems
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import no.nav.k9.rapid.behov.Behovsformat.BehovssekvensId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -60,7 +61,9 @@ internal class BehovssekvensIdTest {
         private fun Map<String, String>.behovssekvensId() = jacksonObjectMapper().writeValueAsString(this).let { json ->
             JsonMessage(
                 originalMessage = json,
-                problems = MessageProblems(originalMessage = json)
+                problems = MessageProblems(originalMessage = json),
+                metrics = SimpleMeterRegistry(),
+                randomIdGenerator = null
             ).also { jsonMessage ->
                 jsonMessage.interestedIn("@id", BehovssekvensId)
             }.behovssekvensId()

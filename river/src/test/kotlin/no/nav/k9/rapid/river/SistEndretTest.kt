@@ -1,8 +1,12 @@
 package no.nav.k9.rapid.river
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.github.navikt.tbd_libs.rapids_and_rivers.JsonMessage
+import com.github.navikt.tbd_libs.rapids_and_rivers.isMissingOrNull
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageContext
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageProblems
 import de.huxhorn.sulky.ulid.ULID
-import no.nav.helse.rapids_rivers.*
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import no.nav.k9.rapid.behov.Behov
 import no.nav.k9.rapid.behov.Behovssekvens
 import org.junit.jupiter.api.Assertions.*
@@ -48,7 +52,7 @@ internal class SistEndretTest {
                 return this.toString()
             }
 
-            fun jsonMessage() = JsonMessage(message!!, MessageProblems(message!!)).also { it.interestedIn("@sistEndret") }
+            fun jsonMessage() = JsonMessage(message!!, MessageProblems(message!!), SimpleMeterRegistry()).also { it.interestedIn("@sistEndret") }
         }
 
         sleep(50)
