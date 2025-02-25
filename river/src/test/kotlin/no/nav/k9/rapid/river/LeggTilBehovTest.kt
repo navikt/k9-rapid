@@ -2,9 +2,10 @@ package no.nav.k9.rapid.river
 
 import com.fasterxml.jackson.databind.node.JsonNodeType
 import com.fasterxml.jackson.databind.node.ObjectNode
+import com.github.navikt.tbd_libs.rapids_and_rivers.JsonMessage
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageProblems
 import de.huxhorn.sulky.ulid.ULID
-import no.nav.helse.rapids_rivers.JsonMessage
-import no.nav.helse.rapids_rivers.MessageProblems
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import no.nav.k9.rapid.behov.Behov
 import no.nav.k9.rapid.behov.Behovsformat
 import no.nav.k9.rapid.behov.Behovssekvens
@@ -88,8 +89,10 @@ internal class LeggTilBehovTest {
 }
 
 internal fun Behovssekvens.somJsonMessage() = JsonMessage(
-        originalMessage = keyValue.second,
-        problems = MessageProblems(originalMessage = keyValue.second)
+    originalMessage = keyValue.second,
+    problems = MessageProblems(originalMessage = keyValue.second),
+    metrics = SimpleMeterRegistry(),
+    randomIdGenerator = null
 ).also { require(erBehovssekvens(it)) }
 
 internal fun JsonMessage.assert(forventetBehovsrekkefølge: List<String>) {

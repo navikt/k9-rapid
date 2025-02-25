@@ -1,7 +1,9 @@
 package no.nav.k9.rapid.river
 
+import com.github.navikt.tbd_libs.rapids_and_rivers.River
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageMetadata
 import de.huxhorn.sulky.ulid.ULID
-import no.nav.helse.rapids_rivers.River
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import no.nav.k9.rapid.behov.Behov
 import no.nav.k9.rapid.behov.Behovssekvens
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -37,11 +39,11 @@ internal class LøsningPåTest {
     @Test
     fun `uten løsninger på noen behov`() {
         val message = behovssekvens.somJsonMessage().toJson()
-        harLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance)
+        harLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         var utfall = sisteUtfallPacketListener.sistUtfall().first
         assertEquals(SisteUtfallPacketListener.Utfall.Error, utfall)
 
-        utenLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance)
+        utenLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         utfall = sisteUtfallPacketListener.sistUtfall().first
         assertEquals(SisteUtfallPacketListener.Utfall.Packet, utfall)
     }
@@ -49,11 +51,11 @@ internal class LøsningPåTest {
     @Test
     fun `løsning på ett behov`() {
         val message = behovssekvens.somJsonMessage().leggTilLøsning("Foo").toJson()
-        harLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance)
+        harLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         var utfall = sisteUtfallPacketListener.sistUtfall().first
         assertEquals(SisteUtfallPacketListener.Utfall.Error, utfall)
 
-        utenLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance)
+        utenLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         utfall = sisteUtfallPacketListener.sistUtfall().first
         assertEquals(SisteUtfallPacketListener.Utfall.Error, utfall)
     }
@@ -61,11 +63,11 @@ internal class LøsningPåTest {
     @Test
     fun `løsning på begge behov`() {
         val message = behovssekvens.somJsonMessage().leggTilLøsning("Foo").leggTilLøsning("Bar").toJson()
-        harLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance)
+        harLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         var utfall = sisteUtfallPacketListener.sistUtfall().first
         assertEquals(SisteUtfallPacketListener.Utfall.Packet, utfall)
 
-        utenLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance)
+        utenLøsningPåBehovRiver.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         utfall = sisteUtfallPacketListener.sistUtfall().first
         assertEquals(SisteUtfallPacketListener.Utfall.Error, utfall)
     }

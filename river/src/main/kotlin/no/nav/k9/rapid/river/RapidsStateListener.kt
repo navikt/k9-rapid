@@ -1,7 +1,7 @@
 package no.nav.k9.rapid.river
 
-import no.nav.helse.rapids_rivers.KafkaRapid
-import no.nav.helse.rapids_rivers.RapidsConnection
+import com.github.navikt.tbd_libs.rapids_and_rivers.KafkaRapid
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.RapidsConnection
 import no.nav.k9.rapid.behov.Behovsformat.iso8601
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
