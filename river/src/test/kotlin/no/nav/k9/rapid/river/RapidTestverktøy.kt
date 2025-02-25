@@ -3,8 +3,10 @@ package no.nav.k9.rapid.river
 import com.github.navikt.tbd_libs.rapids_and_rivers.JsonMessage
 import com.github.navikt.tbd_libs.rapids_and_rivers.River
 import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageContext
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageMetadata
 import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageProblems
 import com.github.navikt.tbd_libs.rapids_and_rivers_api.RapidsConnection
+import io.micrometer.core.instrument.MeterRegistry
 
 internal class VoidMesageContext private constructor(): MessageContext {
     override fun publish(message: String) {}
@@ -38,13 +40,13 @@ internal class SisteUtfallPacketListener: River.PacketListener {
             null, null, null
     )
 
-    override fun onPacket(packet: JsonMessage, context: MessageContext) {
+    override fun onPacket(packet: JsonMessage, context: MessageContext, metadata: MessageMetadata, meterRegistry: MeterRegistry) {
         sisteMelding = Triple(packet, null, null)
     }
     override fun onSevere(error: MessageProblems.MessageException, context: MessageContext) {
         sisteMelding = Triple(null,  error, null)
     }
-    override fun onError(problems: MessageProblems, context: MessageContext) {
+    override fun onError(problems: MessageProblems, context: MessageContext, metadata: MessageMetadata) {
         sisteMelding = Triple(null, null, problems)
     }
     internal fun sistUtfall() : Pair<Utfall, String> = when {

@@ -1,6 +1,7 @@
 package no.nav.k9.rapid.river
 
 import com.github.navikt.tbd_libs.rapids_and_rivers.River
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageMetadata
 import de.huxhorn.sulky.ulid.ULID
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import no.nav.k9.rapid.behov.Behov
@@ -32,7 +33,7 @@ internal class SkalLøseBehovTest {
 
     @Test
     fun `Ikke et sekvensielt behov`() {
-        river.onMessage("{}", VoidMesageContext.Instance, SimpleMeterRegistry())
+        river.onMessage("{}", VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         val (sisteUtfall, error) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Error, sisteUtfall)
         assertTrue(error.contains("@type") && error.contains("@versjon"))
@@ -42,7 +43,7 @@ internal class SkalLøseBehovTest {
     fun `Skal ikke løses enda`() {
         val message = behovssekvens.keyValue.second
         assertEquals("Foo", behovssekvens.somJsonMessage().aktueltBehov())
-        river.onMessage(message, VoidMesageContext.Instance, SimpleMeterRegistry())
+        river.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         val (sisteUtfall, error) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Error, sisteUtfall)
         assertTrue(error.contains("@løsninger.Foo"))
@@ -53,7 +54,7 @@ internal class SkalLøseBehovTest {
         val message = behovssekvens.somJsonMessage().also {
             it.leggTilLøsning("Foo", mapOf("løsning" to true))
         }.also { assertEquals(TestBehov, it.aktueltBehov()) }.toJson()
-        river.onMessage(message, VoidMesageContext.Instance, SimpleMeterRegistry())
+        river.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         val (sisteUtfall, _) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Packet, sisteUtfall)
     }
@@ -63,7 +64,7 @@ internal class SkalLøseBehovTest {
         val message = behovssekvens.somJsonMessage().also {
             it.leggTilLøsning(TestBehov, mapOf("løsning" to true))
         }.also { assertEquals("Foo", it.aktueltBehov()) }.toJson()
-        river.onMessage(message, VoidMesageContext.Instance, SimpleMeterRegistry())
+        river.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         val (sisteUtfall, error) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Error, sisteUtfall)
         assertTrue(error.contains("@løsninger.$TestBehov") && error.contains("Alle matchende behov allerede løst."))
@@ -72,7 +73,7 @@ internal class SkalLøseBehovTest {
     @Test
     fun `Mangler felter for behovssekvens`() {
         val message = behovssekvens.keyValue.second.replace("@behovsrekkefølge", "@FooBar")
-        river.onMessage(message, VoidMesageContext.Instance, SimpleMeterRegistry())
+        river.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         val (sisteUtfall, severe) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Severe, sisteUtfall)
         assertTrue(severe.contains("@behovsrekkefølge"))
@@ -99,7 +100,7 @@ internal class SkalLøseBehovTest {
         val message = behovssekvens.somJsonMessage().also {
             it.leggTilLøsning("Foo", mapOf("løsning" to true))
         }.also { assertEquals(TestBehovMedSuffix, it.aktueltBehov()) }.toJson()
-        river.onMessage(message, VoidMesageContext.Instance, SimpleMeterRegistry())
+        river.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         val (sisteUtfall, _) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Packet, sisteUtfall)
     }
@@ -127,7 +128,7 @@ internal class SkalLøseBehovTest {
             it.leggTilLøsning("Foo", mapOf("løsning" to true))
             it.leggTilLøsning(TestBehov, mapOf("løsning" to true))
         }.also { assertEquals(TestBehovMedSuffix, it.aktueltBehov()) }.toJson()
-        river.onMessage(message, VoidMesageContext.Instance, SimpleMeterRegistry())
+        river.onMessage(message, VoidMesageContext.Instance, MessageMetadata("", -1, -1, null, emptyMap()), SimpleMeterRegistry())
         val (sisteUtfall, _) = sisteUtfallPacketListener.sistUtfall()
         assertEquals(SisteUtfallPacketListener.Utfall.Packet, sisteUtfall)
     }
