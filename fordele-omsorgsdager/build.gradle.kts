@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     api(project(":behov"))
-    testImplementation("org.skyscreamer:jsonassert:1.5.1")
+    testImplementation("org.skyscreamer:jsonassert:1.5.3")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
