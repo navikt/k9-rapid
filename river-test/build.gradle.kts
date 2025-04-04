@@ -1,4 +1,4 @@
-val tbdLibsRapidsAndRiversTestVersion = "2025.04.02-15.56-d34332c4"
+val tbdLibsRapidsAndRiversTestVersion = "2025.04.04-09.18-7cc3badf"
 
 
 plugins {
