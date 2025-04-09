@@ -1,6 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 val junitJupiterVersion = "5.12.1"
+val junitPlatformVersion = "1.12.1"
 val jacksonVersion = "2.18.3"
 val ulidVersion = "8.3.0"
 
@@ -42,6 +43,7 @@ subprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
         implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
 
+        testImplementation("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
         testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
         testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
