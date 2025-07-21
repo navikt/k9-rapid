@@ -91,7 +91,6 @@ internal class LeggTilBehovTest {
 internal fun Behovssekvens.somJsonMessage() = JsonMessage(
     originalMessage = keyValue.second,
     problems = MessageProblems(originalMessage = keyValue.second),
-    metrics = SimpleMeterRegistry(),
     randomIdGenerator = null
 ).also { require(erBehovssekvens(it)) }
 
