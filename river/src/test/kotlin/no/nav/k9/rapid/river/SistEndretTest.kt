@@ -3,8 +3,11 @@ package no.nav.k9.rapid.river
 import com.fasterxml.jackson.databind.JsonNode
 import com.github.navikt.tbd_libs.rapids_and_rivers.JsonMessage
 import com.github.navikt.tbd_libs.rapids_and_rivers.isMissingOrNull
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.FailedMessage
 import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageContext
 import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageProblems
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.OutgoingMessage
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.SentMessage
 import de.huxhorn.sulky.ulid.ULID
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import no.nav.k9.rapid.behov.Behov
@@ -44,6 +47,7 @@ internal class SistEndretTest {
         val messageContext = object: MessageContext {
             var message: String? = null
             override fun publish(message: String) = throw IllegalStateException("Ikke brukt.")
+            override fun publish(messages: List<OutgoingMessage>) = throw IllegalStateException("Ikke brukt.")
             override fun publish(key: String, message: String) {
                 this.message = message
             }
@@ -52,7 +56,7 @@ internal class SistEndretTest {
                 return this.toString()
             }
 
-            fun jsonMessage() = JsonMessage(message!!, MessageProblems(message!!), SimpleMeterRegistry()).also { it.interestedIn("@sistEndret") }
+            fun jsonMessage() = JsonMessage(message!!, MessageProblems(message!!)).also { it.interestedIn("@sistEndret") }
         }
 
         sleep(50)

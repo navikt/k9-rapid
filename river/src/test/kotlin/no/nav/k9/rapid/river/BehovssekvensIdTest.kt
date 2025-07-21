@@ -62,7 +62,6 @@ internal class BehovssekvensIdTest {
             JsonMessage(
                 originalMessage = json,
                 problems = MessageProblems(originalMessage = json),
-                metrics = SimpleMeterRegistry(),
                 randomIdGenerator = null
             ).also { jsonMessage ->
                 jsonMessage.interestedIn("@id", BehovssekvensId)

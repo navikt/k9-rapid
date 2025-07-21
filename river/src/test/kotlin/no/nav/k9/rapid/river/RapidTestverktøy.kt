@@ -2,15 +2,22 @@ package no.nav.k9.rapid.river
 
 import com.github.navikt.tbd_libs.rapids_and_rivers.JsonMessage
 import com.github.navikt.tbd_libs.rapids_and_rivers.River
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.FailedMessage
 import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageContext
 import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageMetadata
 import com.github.navikt.tbd_libs.rapids_and_rivers_api.MessageProblems
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.OutgoingMessage
 import com.github.navikt.tbd_libs.rapids_and_rivers_api.RapidsConnection
+import com.github.navikt.tbd_libs.rapids_and_rivers_api.SentMessage
 import io.micrometer.core.instrument.MeterRegistry
 
 internal class VoidMesageContext private constructor(): MessageContext {
     override fun publish(message: String) {}
     override fun publish(key: String, message: String) {}
+    override fun publish(messages: List<OutgoingMessage>): Pair<List<SentMessage>, List<FailedMessage>> {
+        return Pair(emptyList(), emptyList())
+    }
+
     override fun rapidName(): String {
         return this.toString()
     }
@@ -23,6 +30,9 @@ internal class VoidMesageContext private constructor(): MessageContext {
 internal class VoidRapidsConnection private constructor(): RapidsConnection() {
     override fun publish(message: String) {}
     override fun publish(key: String, message: String) {}
+    override fun publish(messages: List<OutgoingMessage>): Pair<List<SentMessage>, List<FailedMessage>> {
+        return Pair(emptyList(), emptyList())
+    }
     override fun rapidName(): String {
         return this.toString()
     }
