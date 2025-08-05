@@ -1,4 +1,4 @@
-val rapidsAndRiversVersion = "2025061811051750237542.df739400e55e"
+val rapidsAndRiversVersion = "2025080508591754377187.3bb45f5904cf"
 
 
 plugins {
