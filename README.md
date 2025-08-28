@@ -63,7 +63,7 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
 
 ### Andre applikasjoner som kun sender meldinger in på rapiden
 - **k9-sak**
-- **omsorgsdager-melding-prosessering**
+- **~~omsorgsdager-melding-prosessering~~**
 
 ### Applikasjoner som er del av k9-rapid men ikke bruker kafka
 - **omsorgspenger-tilgangsstyring**
