@@ -52,7 +52,7 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgspenger-rammemeldinger&metric=coverage)](https://sonarcloud.io/summary/overall?id=navikt_omsorgspenger-rammemeldinger) ]
   - Håndterer behandling og lagring av rammemeldinger som er flyttet ut av Infotrygd, samt sammenstille nye rammemeldinger med det som allerede finnes i Infotrygd. 
 
-- **omsorgsdager**
+- **~~omsorgsdager~~**
   - [
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgsdager&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=navikt_omsorgsdager)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=navikt_omsorgsdager&metric=ncloc)](https://sonarcloud.io/summary/overall?id=navikt_omsorgsdager)
@@ -68,7 +68,7 @@ Verktøy for bruk av [rapids-and-rivers](https://github.com/navikt/rapids-and-ri
 ### Applikasjoner som er del av k9-rapid men ikke bruker kafka
 - **omsorgspenger-tilgangsstyring**
   - Brukes for o gjøre tilgangssjekk m.h.a AD-grupper & PDL-data (gradering)
-- **omsorgspenger-proxy**
+- **~~omsorgspenger-proxy~~**
   - Proxy for kommunikation mellom fss<->gcp och utveksling av token.
 - **omsorgspenger-infotrygd-rammevedtak**
   - Henter & tolker vedtak i fritekst-format fra infotrygd.
