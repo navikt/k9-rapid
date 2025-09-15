@@ -7,7 +7,7 @@ val ulidVersion = "8.3.0"
 
 plugins {
 
-    kotlin("jvm") version "2.2.10"
+    kotlin("jvm") version "2.2.20"
 }
 
 repositories {
