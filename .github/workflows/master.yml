@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, 'ci skip')
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # Henter flere commits for changelog
       - uses: actions/setup-java@v5
