@@ -20,5 +20,6 @@ updates:
       default-days: 7
       exclude:
         - "no.nav.*"
+        - "com.github.navikt.*"
     registries:
       - k9-rapid
