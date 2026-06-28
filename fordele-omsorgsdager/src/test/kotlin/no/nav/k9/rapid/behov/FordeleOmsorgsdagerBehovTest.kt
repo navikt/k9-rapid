@@ -29,7 +29,7 @@ internal class FordeleOmsorgsdagerBehovTest {
                     "identitetsnummer": "11111111112"
                 },
                 "barn": [{
-                    "identitetsnummer": "11111111113",
+                    "identitetsnummer": "24420167209",
                     "fødselsdato": "2020-01-03"
                 },{
                     "identitetsnummer": "11111111114",
@@ -63,7 +63,7 @@ private fun behov(
     ),
     barn = listOf(
         FordeleOmsorgsdagerBehov.Barn(
-            identitetsnummer = "11111111113", fødselsdato = LocalDate.parse("2020-01-03")),
+            identitetsnummer = "24420167209", fødselsdato = LocalDate.parse("2020-01-03")),
         FordeleOmsorgsdagerBehov.Barn(
             identitetsnummer = "11111111114", fødselsdato = LocalDate.parse("2020-01-04"))
     ),
