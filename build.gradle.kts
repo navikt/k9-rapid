@@ -1,12 +1,12 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
-val junitVersion = "6.1.1"
+val junitVersion = "6.1.3"
 val jacksonVersion = "2.21.5"
 val ulidVersion = "8.3.0"
 
 plugins {
 
-    kotlin("jvm") version "2.4.10"
+    kotlin("jvm") version "2.4.20"
 }
 
 repositories {
